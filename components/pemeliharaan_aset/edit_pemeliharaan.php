@@ -294,7 +294,7 @@ $result_aset = $conn->query($sql_aset);
             <div class="container">
                 <div class="page-inner">
                     <div class="page-header">
-                        <h3 class="fw-bold mb-3">Notifications</h3>
+                        <h3 class="fw-bold mb-3">Pemeliharaan Aset</h3>
                         <ul class="breadcrumbs mb-3">
                             <li class="nav-home">
                                 <a href="#">
@@ -305,13 +305,13 @@ $result_aset = $conn->query($sql_aset);
                                 <i class="icon-arrow-right"></i>
                             </li>
                             <li class="nav-item">
-                                <a href="#">Base</a>
+                                <a href="#">Pemeliharaan Aset</a>
                             </li>
                             <li class="separator">
                                 <i class="icon-arrow-right"></i>
                             </li>
                             <li class="nav-item">
-                                <a href="#">Notifications</a>
+                                <a href="#">Edit Pemelihraan Aset</a>
                             </li>
                         </ul>
                     </div>
@@ -329,11 +329,11 @@ $result_aset = $conn->query($sql_aset);
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="tanggal_perbaikan" class="form-label">Tanggal Perbaikan</label>
+                            <label for="tanggal_perbaikan" class="form-label">Tanggal Pemeliharaan</label>
                             <input type="date" id="tanggal_perbaikan" name="tanggal_perbaikan" class="form-control" value="<?php echo $row['tanggal_perbaikan']; ?>" required>
                         </div>
                         <div class="mb-3">
-                            <label for="deskripsi_kegiatan" class="form-label">Deskripsi Kegiatan</label>
+                            <label for="deskripsi_kegiatan" class="form-label">Deskripsi Pemeliharaan</label>
                             <textarea id="deskripsi_kegiatan" name="deskripsi_kegiatan" class="form-control" rows="3" required><?php echo htmlspecialchars($row['deksripsi_kegiatan']); ?></textarea>
                         </div>
                         <div class="mb-3">
@@ -342,11 +342,14 @@ $result_aset = $conn->query($sql_aset);
                         </div>
                         <div class="mb-3">
                             <label for="status" class="form-label">Status</label>
-                            <input type="text" id="status" name="status" class="form-control" value="<?php echo htmlspecialchars($row['status']); ?>" required>
+                            <select class="form-control" id="status" name="status" required>
+                                <option value="Selesai">Selesai</option>
+                                <option value="Belum Selesai">Belum Selesai</option>
+                            </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Simpan</button>
 
-                        <a href="../../index.php?page=pemeliharaan_aset" class="btn btn-secondary">Kembali</a>
+                        <a href="../../components/pemeliharaan_aset.php" class="btn btn-secondary">Kembali</a>
                     </form>
                 </div>
             </div>

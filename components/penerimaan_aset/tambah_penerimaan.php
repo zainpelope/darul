@@ -1,10 +1,16 @@
 <?php
 include '../../koneksi.php';
 
-$sql_pengadaan = "SELECT id_pengadaan FROM pengadaan_aset";
+$sql_pengadaan = "SELECT p.id_pengadaan, k.deskripsi_kebutuhan 
+                  FROM pengadaan_aset p 
+                  JOIN kebutuhan_aset k ON p.id_kebutuhan = k.id_kebutuhan";
 $result_pengadaan = $conn->query($sql_pengadaan);
 
-$sql_pengguna = "SELECT id_pengguna, nama_pengguna FROM pengguna";
+
+$sql_pengguna = "SELECT p.id_pengguna, p.nama_pengguna 
+                 FROM pengguna p
+                 JOIN hak_akses h ON p.id_role = h.id_role
+                 WHERE h.nama_role IN ('Tata Usaha', 'Kepala Sekolah')";
 $result_pengguna = $conn->query($sql_pengguna);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -13,12 +19,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tanggal_penerimaan = $_POST['tanggal_penerimaan'];
     $kondisi = $_POST['kondisi'];
 
-    $sql = "INSERT INTO penerimaan_aset (id_pengadaan, id_pengguna, tanggal_penerimaan, kondisi) VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO penerimaan_aset (id_pengadaan, id_pengguna, tanggal_penerimaan, kondisi) 
+            VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("iiss", $id_pengadaan, $id_pengguna, $tanggal_penerimaan, $kondisi);
     $stmt->execute();
 
-    header("Location: ../../components/panels.php");
+    header("Location: ../../components/penerimaan_aset.php");
     exit();
 }
 ?>
@@ -74,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="sidebar-logo">
                 <!-- Logo Header -->
                 <div class="logo-header" data-background-color="dark">
-                    <a href="../../index.html" class="logo">
+                    <a href="../../index.php" class="logo">
                         <img
                             src="../../assets/img/kaiadmin/logo_light.svg"
                             alt="navbar brand"
@@ -99,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="sidebar-content">
                     <ul class="nav nav-secondary">
                         <li class="nav-item">
-                            <a href="../../index.html" class="collapsed" aria-expanded="false">
+                            <a href="../../index.php" class="collapsed" aria-expanded="false">
                                 <i class="fas fa-home"></i>
                                 <p>Dashboard</p>
                             </a>
@@ -127,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </li>
 
                         <li class="nav-item active">
-                            <a href="../../index.html">
+                            <a href="../../index.php">
                                 <i class="fas fa-th-list"></i>
                                 <p>Penerimaan Aset</p>
                             </a>
@@ -229,7 +236,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="main-header-logo">
                     <!-- Logo Header -->
                     <div class="logo-header" data-background-color="dark">
-                        <a href="../../index.html" class="logo">
+                        <a href="../../index.php" class="logo">
                             <img
                                 src="../../assets/img/kaiadmin/logo_light.svg"
                                 alt="navbar brand"
@@ -360,7 +367,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <?php
                                 if ($result_pengadaan->num_rows > 0) {
                                     while ($row = $result_pengadaan->fetch_assoc()) {
-                                        echo "<option value='" . $row['id_pengadaan'] . "'>" . $row['id_pengadaan'] . "</option>";
+                                        echo "<option value='" . $row['id_pengadaan'] . "'>" . $row['deskripsi_kebutuhan'] . "</option>";
                                     }
                                 } else {
                                     echo "<option value='' disabled>Tidak ada data</option>";
@@ -375,7 +382,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <?php
                                 if ($result_pengguna->num_rows > 0) {
                                     while ($row = $result_pengguna->fetch_assoc()) {
-                                        echo "<option value='" . $row['id_pengguna'] . "'>" . $row['id_pengguna'] . "</option>";
+                                        echo "<option value='" . $row['id_pengguna'] . "'>" . $row['nama_pengguna'] . "</option>";
                                     }
                                 } else {
                                     echo "<option value='' disabled>Tidak ada data</option>";
@@ -392,7 +399,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <input type="text" class="form-control" id="kondisi" name="kondisi" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Simpan</button>
-                        <a href="../../components/panels.php" class="btn btn-secondary">Kembali</a>
+                        <a href="../../components/penerimaan_aset.php" class="btn btn-secondary">Kembali</a>
                     </form>
                 </div>
             </div>

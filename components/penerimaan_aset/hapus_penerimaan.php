@@ -8,5 +8,5 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $id);
 $stmt->execute();
 
-header("Location: ../../components/panels.php");
+header("Location: ../../components/penerimaan_aset.php");
 exit();

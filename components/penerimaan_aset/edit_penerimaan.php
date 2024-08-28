@@ -1,23 +1,16 @@
 <?php
 include '../../koneksi.php';
 
-$id_penerimaan = $_GET['id'] ?? '';
-
-if (!$id_penerimaan) {
-    header("Location: ../index.php?page=penerimaan_aset");
-    exit();
-}
-
-$sql = "SELECT * FROM penerimaan_aset WHERE id_penerimaan = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $id_penerimaan);
-$stmt->execute();
-$penerimaan = $stmt->get_result()->fetch_assoc();
-
-$sql_pengadaan = "SELECT id_pengadaan FROM pengadaan_aset";
+$sql_pengadaan = "SELECT p.id_pengadaan, k.deskripsi_kebutuhan 
+                  FROM pengadaan_aset p 
+                  JOIN kebutuhan_aset k ON p.id_kebutuhan = k.id_kebutuhan";
 $result_pengadaan = $conn->query($sql_pengadaan);
 
-$sql_pengguna = "SELECT id_pengguna FROM pengguna";
+
+$sql_pengguna = "SELECT p.id_pengguna, p.nama_pengguna 
+                 FROM pengguna p
+                 JOIN hak_akses h ON p.id_role = h.id_role
+                 WHERE h.nama_role IN ('Tata Usaha', 'Kepala Sekolah')";
 $result_pengguna = $conn->query($sql_pengguna);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -26,12 +19,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tanggal_penerimaan = $_POST['tanggal_penerimaan'];
     $kondisi = $_POST['kondisi'];
 
-    $sql_update = "UPDATE penerimaan_aset SET id_pengadaan = ?, id_pengguna = ?, tanggal_penerimaan = ?, kondisi = ? WHERE id_penerimaan = ?";
-    $stmt_update = $conn->prepare($sql_update);
-    $stmt_update->bind_param("iissi", $id_pengadaan, $id_pengguna, $tanggal_penerimaan, $kondisi, $id_penerimaan);
-    $stmt_update->execute();
+    $sql = "INSERT INTO penerimaan_aset (id_pengadaan, id_pengguna, tanggal_penerimaan, kondisi) 
+            VALUES (?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("iiss", $id_pengadaan, $id_pengguna, $tanggal_penerimaan, $kondisi);
+    $stmt->execute();
 
-    header("Location: ../../components/panels.php");
+    header("Location: ../../components/penerimaan_aset.php");
     exit();
 }
 ?>
@@ -365,16 +359,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </ul>
                     </div>
                     <h2>Edit Penerimaan Aset</h2>
-                    <form action="edit_penerimaan.php?id=<?php echo htmlspecialchars($id_penerimaan); ?>" method="post">
+                    <form action="tambah_penerimaan.php" method="post">
                         <div class="mb-3">
-                            <label for="id_pengadaan" class="form-label">ID Pengadaan</label>
+                            <label for="id_pengadaan" class="form-label">Pengadaan</label>
                             <select class="form-select" id="id_pengadaan" name="id_pengadaan" required>
                                 <option value="">Pilih Pengadaan</option>
                                 <?php
                                 if ($result_pengadaan->num_rows > 0) {
                                     while ($row = $result_pengadaan->fetch_assoc()) {
-                                        $selected = ($row['id_pengadaan'] == $penerimaan['id_pengadaan']) ? 'selected' : '';
-                                        echo "<option value='" . $row['id_pengadaan'] . "' $selected>" . $row['id_pengadaan'] . "</option>";
+                                        echo "<option value='" . $row['id_pengadaan'] . "'>" . $row['deskripsi_kebutuhan'] . "</option>";
                                     }
                                 } else {
                                     echo "<option value='' disabled>Tidak ada data</option>";
@@ -383,14 +376,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="id_pengguna" class="form-label">ID Pengguna</label>
+                            <label for="id_pengguna" class="form-label">Pengguna</label>
                             <select class="form-select" id="id_pengguna" name="id_pengguna" required>
                                 <option value="">Pilih Pengguna</option>
                                 <?php
                                 if ($result_pengguna->num_rows > 0) {
                                     while ($row = $result_pengguna->fetch_assoc()) {
-                                        $selected = ($row['id_pengguna'] == $penerimaan['id_pengguna']) ? 'selected' : '';
-                                        echo "<option value='" . $row['id_pengguna'] . "' $selected>" . $row['id_pengguna'] . "</option>";
+                                        echo "<option value='" . $row['id_pengguna'] . "'>" . $row['nama_pengguna'] . "</option>";
                                     }
                                 } else {
                                     echo "<option value='' disabled>Tidak ada data</option>";
@@ -400,15 +392,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <div class="mb-3">
                             <label for="tanggal_penerimaan" class="form-label">Tanggal Penerimaan</label>
-                            <input type="date" class="form-control" id="tanggal_penerimaan" name="tanggal_penerimaan" value="<?php echo htmlspecialchars($penerimaan['tanggal_penerimaan']); ?>" required>
+                            <input type="date" class="form-control" id="tanggal_penerimaan" name="tanggal_penerimaan" required>
                         </div>
                         <div class="mb-3">
                             <label for="kondisi" class="form-label">Kondisi</label>
-                            <input type="text" class="form-control" id="kondisi" name="kondisi" value="<?php echo htmlspecialchars($penerimaan['kondisi']); ?>" required>
+                            <input type="text" class="form-control" id="kondisi" name="kondisi" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Simpan</button>
-                        <a href="../../components/panels.php" class="btn btn-secondary">Kembali</a>
-
+                        <a href="../../components/penerimaan_aset.php" class="btn btn-secondary">Kembali</a>
                     </form>
                 </div>
             </div>

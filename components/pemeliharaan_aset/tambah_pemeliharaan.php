@@ -236,20 +236,7 @@ $result_aset = $conn->query($sql_aset);
                 <nav
                     class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
                     <div class="container-fluid">
-                        <nav
-                            class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <button type="submit" class="btn btn-search pe-1">
-                                        <i class="fa fa-search search-icon"></i>
-                                    </button>
-                                </div>
-                                <input
-                                    type="text"
-                                    placeholder="Search ..."
-                                    class="form-control" />
-                            </div>
-                        </nav>
+
 
                         <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
 
@@ -288,7 +275,7 @@ $result_aset = $conn->query($sql_aset);
             <div class="container">
                 <div class="page-inner">
                     <div class="page-header">
-                        <h3 class="fw-bold mb-3">Notifications</h3>
+                        <h3 class="fw-bold mb-3">Pemeliharaan Aset</h3>
                         <ul class="breadcrumbs mb-3">
                             <li class="nav-home">
                                 <a href="#">
@@ -299,18 +286,19 @@ $result_aset = $conn->query($sql_aset);
                                 <i class="icon-arrow-right"></i>
                             </li>
                             <li class="nav-item">
-                                <a href="#">Base</a>
+                                <a href="#">Pemeliharaan Aset</a>
                             </li>
                             <li class="separator">
                                 <i class="icon-arrow-right"></i>
                             </li>
                             <li class="nav-item">
-                                <a href="#">Notifications</a>
+                                <a href="#">Edit Pemeliharaan Aset</a>
                             </li>
+
                         </ul>
                     </div>
-                    <h2>Tambah Perbaikan Aset</h2>
-                    <form action="../../components/pemeliharaan_aset/proses_tambah_pemeliharaan.php" method="post">
+                    <h2>Tambah Pemeliharaan Aset</h2>
+                    <form action="proses_tambah_pemeliharaan.php" method="post">
                         <div class="mb-3">
                             <label for="id_aset" class="form-label">Nama Aset</label>
                             <select id="id_aset" name="id_aset" class="form-select" required>
@@ -320,11 +308,11 @@ $result_aset = $conn->query($sql_aset);
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="tanggal_perbaikan" class="form-label">Tanggal Perbaikan</label>
+                            <label for="tanggal_perbaikan" class="form-label">Tanggal Pemeliharaan</label>
                             <input type="date" id="tanggal_perbaikan" name="tanggal_perbaikan" class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label for="deskripsi_kegiatan" class="form-label">Deskripsi Kegiatan</label>
+                            <label for="deskripsi_kegiatan" class="form-label">Deskripsi Pemeliharaan</label>
                             <textarea id="deskripsi_kegiatan" name="deskripsi_kegiatan" class="form-control" rows="3" required></textarea>
                         </div>
                         <div class="mb-3">
@@ -333,11 +321,14 @@ $result_aset = $conn->query($sql_aset);
                         </div>
                         <div class="mb-3">
                             <label for="status" class="form-label">Status</label>
-                            <input type="text" id="status" name="status" class="form-control" required>
+                            <select class="form-control" id="status" name="status" required>
+                                <option value="Selesai">Selesai</option>
+                                <option value="Belum Selesai">Belum Selesai</option>
+                            </select>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Simpan</button>
-                        <a href="../../components/notifications.php" class="btn btn-secondary">Kembali</a>
+                        <a href="../../components/pemeliharaan_aset.php" class="btn btn-secondary">Kembali</a>
                     </form>
                 </div>
             </div>

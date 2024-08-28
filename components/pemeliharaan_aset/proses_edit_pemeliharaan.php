@@ -13,7 +13,7 @@ $sql = "UPDATE perbaikan_aset SET id_aset = '$id_aset', tanggal_perbaikan = '$ta
         WHERE id_perbaikan = $id_perbaikan";
 
 if ($conn->query($sql) === TRUE) {
-    header("Location: ../../components/notifications.php");
+    header("Location: ../../components/pemeliharaan_aset.php");
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }

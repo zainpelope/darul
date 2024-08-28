@@ -11,7 +11,7 @@ $sql = "INSERT INTO perbaikan_aset (id_aset, tanggal_perbaikan, deksripsi_kegiat
         VALUES ('$id_aset', '$tanggal_perbaikan', '$deskripsi_kegiatan', '$biaya', '$status')";
 
 if ($conn->query($sql) === TRUE) {
-    header("Location: ../../components/notifications.php");
+    header("Location: ../../components/pemeliharaan_aset.php");
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }

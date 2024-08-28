@@ -1,5 +1,9 @@
 <?php
 include '../../../koneksi.php';
+$sql = "SELECT p.id_pengadaan, p.tanggal_pengadaan, p.vendor, p.jumlah, p.status, k.deskripsi_kebutuhan 
+        FROM pengadaan_aset p
+        JOIN kebutuhan_aset k ON p.id_kebutuhan = k.id_kebutuhan";
+$result = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -54,7 +58,7 @@ include '../../../koneksi.php';
             <div class="sidebar-logo">
                 <!-- Logo Header -->
                 <div class="logo-header" data-background-color="dark">
-                    <a href="../../../index.html" class="logo">
+                    <a href="../../../index.php" class="logo">
                         <img
                             src="../../../assets/img/kaiadmin/logo_light.svg"
                             alt="navbar brand"
@@ -79,7 +83,7 @@ include '../../../koneksi.php';
                 <div class="sidebar-content">
                     <ul class="nav nav-secondary">
                         <li class="nav-item">
-                            <a href="../../../index.html" class="collapsed" aria-expanded="false">
+                            <a href="../../../index.php" class="collapsed" aria-expanded="false">
                                 <i class="fas fa-home"></i>
                                 <p>Dashboard</p>
                             </a>
@@ -108,7 +112,7 @@ include '../../../koneksi.php';
                         </li>
 
                         <li class="nav-item">
-                            <a href="../../../index.html">
+                            <a href="../../../index.php">
                                 <i class="fas fa-th-list"></i>
                                 <p>Penerimaan Aset</p>
                             </a>
@@ -211,7 +215,7 @@ include '../../../koneksi.php';
                 <div class="main-header-logo">
                     <!-- Logo Header -->
                     <div class="logo-header" data-background-color="dark">
-                        <a href="../../../index.html" class="logo">
+                        <a href="../../../index.php" class="logo">
                             <img
                                 src="../../../assets/img/kaiadmin/logo_light.svg"
                                 alt="navbar brand"
@@ -307,70 +311,52 @@ include '../../../koneksi.php';
 
             <div class="container">
                 <div class="page-inner">
-                    <div class="page-header">
-                        <h3 class="fw-bold mb-3">Pengadaan Aset</h3>
-                        <ul class="breadcrumbs mb-3">
-                            <li class="nav-home">
-                                <a href="#">
-                                    <i class="icon-home"></i>
-                                </a>
-                            </li>
-                            <li class="separator">
-                                <i class="icon-arrow-right"></i>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#">Pengadaan</a>
-                            </li>
-                            <li class="separator">
-                                <i class="icon-arrow-right"></i>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#">Pengadaan Aset</a>
-                            </li>
-                        </ul>
+                    <div class="container">
+                        <h2>Data Pengadaan Aset</h2>
+                        <a href="../../../components/dashboard/aset/add_aset.php" class="btn btn-success mb-3">Tambah Aset</a>
+                        <a href="../../../components/pengadaan_aset/pengadaan/tambah_pengadaan.php" class="btn btn-primary mb-3">Tambah Pengadaan</a>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Aset</th>
+                                    <th>Vendor</th>
+                                    <th>Jumlah</th>
+                                    <th>Status</th>
+                                    <th>Tanggal Pengadaan</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                if ($result->num_rows > 0) {
+                                    $no = 1;
+                                    while ($row = $result->fetch_assoc()) {
+                                        $backgroundColor = ($row['status'] == 'Diterima') ? '#28a745' : '#dc3545';
+                                        $textColor = '#ffffff';
+                                        echo "<tr>";
+                                        echo "<td>" . $no . "</td>";
+                                        echo "<td>" . htmlspecialchars($row['deskripsi_kebutuhan']) . "</td>";
+                                        echo "<td>" . htmlspecialchars($row['vendor']) . "</td>";
+                                        echo "<td>" . htmlspecialchars($row['jumlah']) . "</td>";
+                                        echo '<td><span style="background-color: ' . $backgroundColor . '; color: ' . $textColor . '; padding: 2px 6px; border-radius: 4px; font-style: italic;">' . htmlspecialchars($row['status']) . '</span></td>';
+                                        echo "<td>" . date('d-m-Y', strtotime($row['tanggal_pengadaan'])) . "</td>";
+                                        echo "<td>";
+                                        echo "<a href='../../../components/pengadaan_aset/pengadaan/detail_pengadaan.php?id=" . $row['id_pengadaan'] . "' class='btn btn-info btn-sm'>Detail</a> ";
+                                        echo "<a href='../../../components/pengadaan_aset/pengadaan/edit_pengadaan.php?id=" . $row['id_pengadaan'] . "' class='btn btn-warning btn-sm'>Edit</a> ";
+                                        echo "<a href='../../../components/pengadaan_aset/pengadaan/hapus_pengadaan.php?id=" . $row['id_pengadaan'] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"Apakah Anda yakin ingin menghapus data ini?\")'>Delete</a>";
+                                        echo "</td>";
+                                        echo "</tr>";
+                                        $no++;
+                                    }
+                                } else {
+                                    echo "<tr><td colspan='7'>Tidak ada data</td></tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
 
-
-                    <a href="../../../components/pengadaan_aset/pengadaan/add_aset.php" class="btn btn-success mb-3">Tambah Aset</a>
-                    <?php
-
-                    $sql = "SELECT a.id_aset, a.nama_aset, k.nama_kategori, l.nama_lokasi, a.status
-                      FROM aset a
-                      LEFT JOIN kategori_aset k ON a.id_kategori = k.id_kategori
-                      LEFT JOIN lokasi l ON a.id_lokasi = l.id_lokasi";
-
-                    $result = $conn->query($sql);
-
-                    if ($result->num_rows > 0) {
-                        echo '<table class="table table-striped">';
-                        echo '<thead><tr><th>No</th><th>Nama Aset</th><th>Kategori</th><th>Lokasi</th><th>Status</th><th>Aksi</th></tr></thead>';
-                        echo '<tbody>';
-
-                        $no = 1;
-                        while ($row = $result->fetch_assoc()) {
-                            $backgroundColor = ($row['status'] == 'Aktif') ? '#28a745' : '#dc3545';
-                            $textColor = '#ffffff';
-                            echo '<tr>';
-                            echo '<td>' . $no++ . '</td>';
-                            echo '<td>' . $row['nama_aset'] . '</td>';
-                            echo '<td>' . $row['nama_kategori'] . '</td>';
-                            echo '<td>' . $row['nama_lokasi'] . '</td>';
-                            echo '<td><span style="background-color: ' . $backgroundColor . '; color: ' . $textColor . '; padding: 2px 6px; border-radius: 4px; font-style: italic;">' . htmlspecialchars($row['status']) . '</span></td>';
-                            echo '<td>
-                              <a href="../../../components/pengadaan_aset/pengadaan/view_aset.php?id=' . $row['id_aset'] . '" class="btn btn-info">View</a>
-                              <a href="../../../components/pengadaan_aset/pengadaan/edit_aset.php?id=' . $row['id_aset'] . '" class="btn btn-primary">Edit</a> 
-                             
-                            </td>';
-                            echo '</tr>';
-                        }
-
-                        echo '</tbody></table>';
-                    } else {
-                        echo '<div class="alert alert-warning">Tidak ada data.</div>';
-                    }
-
-                    $conn->close();
-                    ?>
                 </div>
             </div>
 
