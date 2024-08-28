@@ -61,7 +61,7 @@ if ($result && mysqli_num_rows($result) > 0) {
                 <!-- Logo Header -->
                 <div class="logo-header" data-background-color="dark">
 
-                    <a href="../index.php" class="logo">
+                    <a href="../kepsek.php" class="logo">
                         <h2 style="color: white; font-weight: bold;">SIM ASET</h2>
 
                     </a>
@@ -83,111 +83,63 @@ if ($result && mysqli_num_rows($result) > 0) {
                 <div class="sidebar-content">
                     <ul class="nav nav-secondary">
                         <li class="nav-item">
-                            <a href="../index.php" class="collapsed" aria-expanded="false">
+                            <a
+                                data-bs-toggle="collapse"
+                                href="../kepsek.php"
+                                class="collapsed"
+                                aria-expanded="false">
                                 <i class="fas fa-home"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
-
-
-
-
-                        <li class="nav-item">
-                            <a data-bs-toggle="collapse" href="#pengadaan">
-                                <i class="fas fa-pen-square"></i>
-                                <p>Pengaadaan Aset</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse" id="pengadaan">
-                                <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="../components/pengadaan_aset/kebutuhan/kebutuhan_aset.php">
-
-                                            <span class="sub-item">Kebutuhan Aset</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="../components/pengadaan_aset/pengadaan/pengadaan_aset.php">
-                                            <span class="sub-item">Pengadaan Aset</span>
-                                        </a>
-                                    </li>
-
-                                </ul>
-                            </div>
+                        <li class="nav-section">
+                            <span class="sidebar-mini-icon">
+                                <i class="fa fa-ellipsis-h"></i>
+                            </span>
                         </li>
-
-
-
-
-
-                        <li class="nav-item">
-                            <a href="../components/penerimaan_aset.php">
-                                <i class="fas fa-th-list"></i>
-                                <p>Penerimaan Aset</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="../components/pemeliharaan_aset.php">
-                                <i class="fas fa-th-list"></i>
-                                <p>Pemeliharaan Aset</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="../components/penyusutan_aset.php">
-                                <i class="fas fa-th-list"></i>
-                                <p>Penyusutan Aset</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="../components/penghapusan_aset.php">
-                                <i class="fas fa-th-list"></i>
-                                <p>Penghapusan Aset</p>
-                            </a>
-                        </li>
-
-
-
                         <li class="nav-item">
                             <a data-bs-toggle="collapse" href="#base">
-                                <i class="fas fa-pen-square"></i>
-                                <p>Laporan</p>
+                                <i class="fas fa-layer-group"></i>
+                                <p>Pengadaan Aset</p>
                                 <span class="caret"></span>
                             </a>
                             <div class="collapse" id="base">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="../components/laporan_aset.php">
-                                            <span class="sub-item">Laporan Aset</span>
+                                        <a
+                                            href="../kepsek/kebutuhan_aset.php">
+                                            <span class="sub-item">Kebutuhan Aset</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="../components/laporan_pengadaan.php">
-                                            <span class="sub-item">Laporan Pengadaan</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="../components/laporan_penerimaan.php">
-                                            <span class="sub-item">Laporan Penerimaan</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="../components/laporan_pemeliharaan.php">
-                                            <span class="sub-item">Laporan Pemelihraan</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="../components/laporan_penyusutan.php">
-                                            <span class="sub-item">Laporan Penyusutan</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="../components/laporan_penghapusan.php">
-                                            <span class="sub-item">Laporan Penghapusan</span>
+                                        <a
+                                            href="../kepsek/pengadaan_aset.php">
+                                            <span class="sub-item">Pengadaan Aset</span>
                                         </a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
+                        <li class="nav-item">
+                            <a href="../kepsek/penerimaan_aset.php">
+                                <i class="fas fa-th-list"></i>
+                                <p>Penerimaan Aset</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../kepsek/pemeliharaan_aset.php">
+                                <i class="fas fa-th-list"></i>
+                                <p>Pemeliharaan Aset</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../kepsek/penyusutan.php">
+                                <i class="fas fa-th-list"></i>
+                                <p>Penyusutan Aset</p>
+                            </a>
+                        </li>
+
+
 
                         <li class="nav-item active submenu">
                             <a data-bs-toggle="collapse" href="#kategori">
@@ -197,25 +149,15 @@ if ($result && mysqli_num_rows($result) > 0) {
                             </a>
                             <div class="collapse show" id="kategori">
                                 <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="../components/kategori.php">
-                                            <span class="sub-item">Kategori Aset</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="../components/lokasi.php">
-                                            <span class="sub-item">Lokasi Aset</span>
-                                        </a>
-                                    </li>
+
                                     <li class="active">
-                                        <a href="../components/profile.php">
+                                        <a href="../kepsek/profile.php">
                                             <span class="sub-item">Pengguna</span>
                                         </a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
-
 
                     </ul>
                 </div>
@@ -229,7 +171,7 @@ if ($result && mysqli_num_rows($result) > 0) {
                     <!-- Logo Header -->
                     <div class="logo-header" data-background-color="dark">
 
-                        <a href="../index.php" class="logo">
+                        <a href="../kepsek.php" class="logo">
                             <h2 style="color: white; font-weight: bold;">SIM ASET</h2>
 
                         </a>
@@ -263,7 +205,7 @@ if ($result && mysqli_num_rows($result) > 0) {
                                         <img src="../assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle">
                                     </div>
                                     <span class="profile-username">
-                                        <span class="op-7">Hi,</span> <span class="fw-bold">Mohammad Halil</span>
+                                        <span class="op-7">Hi,</span> <span class="fw-bold">Mahfud</span>
                                     </span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -307,7 +249,7 @@ if ($result && mysqli_num_rows($result) > 0) {
                             </p>
 
                             <div class="btn-container d-flex flex-column align-items-start">
-                                <a href="../components/profile/edit_profile.php" class="btn btn-primary mb-2">Edit Profile</a>
+                                <a href="../kepsek/edit_profile.php" class="btn btn-primary mb-2">Edit Profile</a>
                                 <a href="../login.php" class="btn btn-danger">Logout</a>
                             </div>
                         </div>

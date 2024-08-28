@@ -1,5 +1,5 @@
 <?php
-include '../../../koneksi.php';
+include '../koneksi.php';
 
 $id_pengadaan = $_GET['id'];
 
@@ -47,7 +47,7 @@ $row = $result->fetch_assoc();
                 <td><?php echo htmlspecialchars($row['status']); ?></td>
             </tr>
         </table>
-        <a href=".../kepsek.php" class="btn btn-secondary">Kembali</a>
+        <a href="../kepsek/pengadaan_aset.php" class="btn btn-secondary">Kembali</a>
     </div>
 </body>
 

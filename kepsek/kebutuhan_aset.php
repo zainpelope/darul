@@ -1,5 +1,5 @@
 <?php
-include '../../../koneksi.php';
+include '../koneksi.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,11 +12,11 @@ include '../../../koneksi.php';
         name="viewport" />
     <link
         rel="icon"
-        href="../../../assets/img/kaiadmin/favicon.ico"
+        href="../assets/img/kaiadmin/favicon.ico"
         type="image/x-icon" />
 
     <!-- Fonts and icons -->
-    <script src="../../../assets/js/plugin/webfont/webfont.min.js"></script>
+    <script src="../assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
         WebFont.load({
             google: {
@@ -29,7 +29,7 @@ include '../../../koneksi.php';
                     "Font Awesome 5 Brands",
                     "simple-line-icons",
                 ],
-                urls: ["../../../assets/css/fonts.min.css"],
+                urls: ["../assets/css/fonts.min.css"],
             },
             active: function() {
                 sessionStorage.fonts = true;
@@ -38,12 +38,12 @@ include '../../../koneksi.php';
     </script>
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="../../../assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../../../assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="../../../assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="../assets/css/kaiadmin.min.css" />
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link rel="stylesheet" href="../../../assets/css/demo.css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
 </head>
 
 <body>
@@ -53,7 +53,7 @@ include '../../../koneksi.php';
             <div class="sidebar-logo">
                 <!-- Logo Header -->
                 <div class="logo-header" data-background-color="dark">
-                    <a href="../../../kepsek.php" class="logo">
+                    <a href="../kepsek.php" class="logo">
                         <h2 style="color: white; font-weight: bold;">SIM ASET</h2>
 
                     </a>
@@ -75,98 +75,60 @@ include '../../../koneksi.php';
                 <div class="sidebar-content">
                     <ul class="nav nav-secondary">
                         <li class="nav-item">
-                            <a href="../../index.html" class="collapsed" aria-expanded="false">
+                            <a
+                                data-bs-toggle="collapse"
+                                href="../kepsek.php"
+                                class="collapsed"
+                                aria-expanded="false">
                                 <i class="fas fa-home"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-section">
+                            <span class="sidebar-mini-icon">
+                                <i class="fa fa-ellipsis-h"></i>
+                            </span>
+                        </li>
+                        <li class="nav-item active submenu">
                             <a data-bs-toggle="collapse" href="#base">
                                 <i class="fas fa-layer-group"></i>
                                 <p>Pengadaan Aset</p>
                                 <span class="caret"></span>
                             </a>
-                            <div class="collapse" id="base">
+                            <div class="collapse show" id="base">
                                 <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="components/avatars.html">
+                                    <li class="active">
+                                        <a href="../kepsek/kebutuhan_aset.php">
                                             <span class="sub-item">Kebutuhan Aset</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="components/buttons.html">
+                                        <a href="../kepsek/pengadaan_aset.php">
                                             <span class="sub-item">Pengadaan Aset</span>
                                         </a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
-
                         <li class="nav-item">
-                            <a href="../../index.html">
+                            <a href="../kepsek/penerimaan_aset.php">
                                 <i class="fas fa-th-list"></i>
                                 <p>Penerimaan Aset</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarLayouts">
+                            <a href="../kepsek/pemeliharaan_aset.php">
                                 <i class="fas fa-th-list"></i>
                                 <p>Pemeliharaan Aset</p>
                             </a>
                         </li>
-                        <li class="nav-item active">
-                            <a data-bs-toggle="collapse" href="#sidebarLayouts">
+                        <li class="nav-item">
+                            <a href="../kepsek/penyusutan.php">
                                 <i class="fas fa-th-list"></i>
                                 <p>Penyusutan Aset</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#sidebarLayouts">
-                                <i class="fas fa-th-list"></i>
-                                <p>Penghapusan Aset</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a data-bs-toggle="collapse" href="#forms">
-                                <i class="fas fa-pen-square"></i>
-                                <p>Laporan</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse" id="forms">
-                                <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="#">
-                                            <span class="sub-item">Laporan Aset</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="sub-item">Laporan Pengadaan</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="sub-item">Laporan Penerimaan</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="sub-item">Laporan Pemelihraan</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="sub-item">Laporan Penyusutan</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="sub-item">Laporan Penghapusan</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
+
 
                         <li class="nav-item">
                             <a data-bs-toggle="collapse" href="#pengaturan">
@@ -176,18 +138,9 @@ include '../../../koneksi.php';
                             </a>
                             <div class="collapse" id="pengaturan">
                                 <ul class="nav nav-collapse">
+
                                     <li>
-                                        <a href="#">
-                                            <span class="sub-item">Kategori Aset</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="sub-item">Lokasi Aset</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
+                                        <a href="../kepsek/profile.php">
                                             <span class="sub-item">Pengguna</span>
                                         </a>
                                     </li>
@@ -205,7 +158,7 @@ include '../../../koneksi.php';
                 <div class="main-header-logo">
                     <!-- Logo Header -->
                     <div class="logo-header" data-background-color="dark">
-                        <a href="../../../kepsek.php" class="logo">
+                        <a href="../kepsek.php" class="logo">
                             <h2 style="color: white; font-weight: bold;">SIM ASET</h2>
 
                         </a>
@@ -274,7 +227,7 @@ include '../../../koneksi.php';
                                     aria-expanded="false">
                                     <div class="avatar-sm">
                                         <img
-                                            src="../../../assets/img/profile.jpg"
+                                            src="../assets/img/profile.jpg"
                                             alt="..."
                                             class="avatar-img rounded-circle" />
                                     </div>
@@ -323,7 +276,7 @@ include '../../../koneksi.php';
 
 
                     <h2>Kebutuhan Aset</h2>
-                    <a href="../../../components/pengadaan_aset/kebutuhan/add_kebutuhan.php" class="btn btn-success mb-3">Tambah Kebutuhan</a>
+
                     <?php
 
                     $sql = "SELECT id_kebutuhan, deskripsi_kebutuhan, tanggal_dibuat, status FROM kebutuhan_aset";
@@ -331,7 +284,7 @@ include '../../../koneksi.php';
 
                     if ($result->num_rows > 0) {
                         echo '<table class="table table-striped">';
-                        echo '<thead><tr><th>No</th><th>Deskripsi</th><th>Tanggal</th><th>Status</th><th>Aksi</th></tr></thead>';
+                        echo '<thead><tr><th>No</th><th>Deskripsi</th><th>Tanggal</th><th>Status</th></tr></thead>';
                         echo '<tbody>';
 
                         $no = 1;
@@ -345,8 +298,7 @@ include '../../../koneksi.php';
                             echo '<td>' . htmlspecialchars(date('d-m-Y', strtotime($row['tanggal_dibuat']))) . '</td>';
                             echo '<td><span style="background-color: ' . $backgroundColor . '; color: ' . $textColor . '; padding: 2px 6px; border-radius: 4px; font-style: italic;">' . htmlspecialchars($row['status']) . '</span></td>';
                             echo '<td>
-                    <a href="../../../components/pengadaan_aset/kebutuhan/edit_kebutuhan.php?id=' . $row['id_kebutuhan'] . '" class="btn btn-primary">Edit</a>
-                    <a href="../../../components/pengadaan_aset/kebutuhan/hapus_kebutuhan.php?id=' . $row['id_kebutuhan'] . '" class="btn btn-danger" onclick="return confirm(\'Apakah Anda yakin ingin menghapus kebutuhan ini?\')">Hapus</a>
+                   
                 </td>';
                             echo '</tr>';
                         }
@@ -539,42 +491,42 @@ include '../../../koneksi.php';
         <!-- End Custom template -->
     </div>
     <!--   Core JS Files   -->
-    <script src="../../../assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="../../../assets/js/core/popper.min.js"></script>
-    <script src="../../../assets/js/core/bootstrap.min.js"></script>
+    <script src="../assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script>
 
     <!-- jQuery Scrollbar -->
-    <script src="../../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
     <!-- Moment JS -->
-    <script src="../../../assets/js/plugin/moment/moment.min.js"></script>
+    <script src="../assets/js/plugin/moment/moment.min.js"></script>
 
     <!-- Chart JS -->
-    <script src="../../../assets/js/plugin/chart.js/chart.min.js"></script>
+    <script src="../assets/js/plugin/chart.js/chart.min.js"></script>
 
     <!-- jQuery Sparkline -->
-    <script src="../../../assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+    <script src="../assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
 
     <!-- Chart Circle -->
-    <script src="../../../assets/js/plugin/chart-circle/circles.min.js"></script>
+    <script src="../assets/js/plugin/chart-circle/circles.min.js"></script>
 
     <!-- Datatables -->
-    <script src="../../../assets/js/plugin/datatables/datatables.min.js"></script>
+    <script src="../assets/js/plugin/datatables/datatables.min.js"></script>
 
     <!-- Bootstrap Notify -->
-    <script src="../../../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+    <script src="../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
 
     <!-- jQuery Vector Maps -->
-    <script src="../../../assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
-    <script src="../../../assets/js/plugin/jsvectormap/world.js"></script>
+    <script src="../assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+    <script src="../assets/js/plugin/jsvectormap/world.js"></script>
 
     <!-- Sweet Alert -->
-    <script src="../../../assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+    <script src="../assets/js/plugin/sweetalert/sweetalert.min.js"></script>
 
     <!-- Kaiadmin JS -->
-    <script src="../../../assets/js/kaiadmin.min.js"></script>
+    <script src="../assets/js/kaiadmin.min.js"></script>
 
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
-    <script src="../../../assets/js/setting-demo2.js"></script>
+    <script src="../assets/js/setting-demo2.js"></script>
 </body>
 
 </html>

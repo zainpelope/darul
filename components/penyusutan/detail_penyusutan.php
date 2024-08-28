@@ -76,7 +76,7 @@ if (!$row) {
             <div class="sidebar-logo">
                 <!-- Logo Header -->
                 <div class="logo-header" data-background-color="dark">
-                    <a href="../../index.html" class="logo">
+                    <a href="../../index.php" class="logo">
                         <h2 style="color: white; font-weight: bold;">SIM ASET</h2>
 
                     </a>
@@ -98,7 +98,7 @@ if (!$row) {
                 <div class="sidebar-content">
                     <ul class="nav nav-secondary">
                         <li class="nav-item">
-                            <a href="../../index.html" class="collapsed" aria-expanded="false">
+                            <a href="../../index.php" class="collapsed" aria-expanded="false">
                                 <i class="fas fa-home"></i>
                                 <p>Dashboard</p>
                             </a>
@@ -126,7 +126,7 @@ if (!$row) {
                         </li>
 
                         <li class="nav-item">
-                            <a href="../../index.html">
+                            <a href="../../index.php">
                                 <i class="fas fa-th-list"></i>
                                 <p>Penerimaan Aset</p>
                             </a>
@@ -228,7 +228,7 @@ if (!$row) {
                 <div class="main-header-logo">
                     <!-- Logo Header -->
                     <div class="logo-header" data-background-color="dark">
-                        <a href="../../index.html" class="logo">
+                        <a href="../../index.php" class="logo">
                             <h2 style="color: white; font-weight: bold;">SIM ASET</h2>
 
                         </a>

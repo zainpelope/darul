@@ -125,7 +125,7 @@ include 'koneksi.php';
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="kepsek/penyusutan_aset.php">
+                            <a href="kepsek/penyusutan.php">
                                 <i class="fas fa-th-list"></i>
                                 <p>Penyusutan Aset</p>
                             </a>

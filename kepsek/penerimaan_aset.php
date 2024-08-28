@@ -60,7 +60,7 @@ $result = $conn->query($sql);
             <div class="sidebar-logo">
                 <!-- Logo Header -->
                 <div class="logo-header" data-background-color="dark">
-                    <a href="../index.php" class="logo">
+                    <a href="../kepsek.php" class="logo">
                         <h2 style="color: white; font-weight: bold;">SIM ASET</h2>
 
                     </a>
@@ -82,10 +82,19 @@ $result = $conn->query($sql);
                 <div class="sidebar-content">
                     <ul class="nav nav-secondary">
                         <li class="nav-item">
-                            <a href="../index.php" class="collapsed" aria-expanded="false">
+                            <a
+                                data-bs-toggle="collapse"
+                                href="../kepsek.php"
+                                class="collapsed"
+                                aria-expanded="false">
                                 <i class="fas fa-home"></i>
                                 <p>Dashboard</p>
                             </a>
+                        </li>
+                        <li class="nav-section">
+                            <span class="sidebar-mini-icon">
+                                <i class="fa fa-ellipsis-h"></i>
+                            </span>
                         </li>
                         <li class="nav-item">
                             <a data-bs-toggle="collapse" href="#base">
@@ -96,84 +105,39 @@ $result = $conn->query($sql);
                             <div class="collapse" id="base">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="../components/pengadaan_aset/kebutuhan/kebutuhan_aset.php">
+                                        <a
+                                            href="../kepsek/kebutuhan_aset.php">
                                             <span class="sub-item">Kebutuhan Aset</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="../components/pengadaan_aset/pengadaan/pengadaan_aset.php">
+                                        <a
+                                            href="../kepsek/pengadaan_aset.php">
                                             <span class="sub-item">Pengadaan Aset</span>
                                         </a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
-
                         <li class="nav-item active">
-                            <a href="../components/penerimaan_aset.php">
+                            <a href="../kepsek/penerimaan_aset.php">
                                 <i class="fas fa-th-list"></i>
                                 <p>Penerimaan Aset</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="../components/pemeliharaan_aset.php">
+                            <a href="../kepsek/pemeliharaan_aset.php">
                                 <i class="fas fa-th-list"></i>
                                 <p>Pemeliharaan Aset</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="../components/penyusutan_aset.php">
+                            <a href="../kepsek/penyusutan_aset.php">
                                 <i class="fas fa-th-list"></i>
                                 <p>Penyusutan Aset</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="../components/penghapusan_aset.php">
-                                <i class="fas fa-th-list"></i>
-                                <p>Penghapusan Aset</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a data-bs-toggle="collapse" href="#forms">
-                                <i class="fas fa-pen-square"></i>
-                                <p>Laporan</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse" id="forms">
-                                <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="../components/laporan_aset.php">
-                                            <span class="sub-item">Laporan Aset</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="../components/laporan_pengadaan.php">
-                                            <span class="sub-item">Laporan Pengadaan</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="../components/laporan_penerimaan.php">
-                                            <span class="sub-item">Laporan Penerimaan</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="../components/laporan_pemeliharaan.php">
-                                            <span class="sub-item">Laporan Pemeliharaan</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="../components/laporan_penyusutan.php">
-                                            <span class="sub-item">Laporan Penyusutan</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="../components/laporan_penghapusan.php">
-                                            <span class="sub-item">Laporan Penghapusan</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
+
 
                         <li class="nav-item">
                             <a data-bs-toggle="collapse" href="#pengaturan">
@@ -183,18 +147,9 @@ $result = $conn->query($sql);
                             </a>
                             <div class="collapse" id="pengaturan">
                                 <ul class="nav nav-collapse">
+
                                     <li>
-                                        <a href="../components/kategori.php">
-                                            <span class="sub-item">Kategori Aset</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="../components/lokasi.php">
-                                            <span class="sub-item">Lokasi Aset</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="../components/profile.php">
+                                        <a href="../kepsek/profile.php">
                                             <span class="sub-item">Pengguna</span>
                                         </a>
                                     </li>
@@ -212,7 +167,7 @@ $result = $conn->query($sql);
                 <div class="main-header-logo">
                     <!-- Logo Header -->
                     <div class="logo-header" data-background-color="dark">
-                        <a href="../index.php" class="logo">
+                        <a href="../kepsek.php" class="logo">
                             <h2 style="color: white; font-weight: bold;">SIM ASET</h2>
 
                         </a>
@@ -289,7 +244,7 @@ $result = $conn->query($sql);
                                     </div>
                                     <span class="profile-username">
                                         <span class="op-7">Hi,</span>
-                                        <span class="fw-bold">Mohammad Halil</span>
+                                        <span class="fw-bold">Mahfud</span>
                                     </span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -328,7 +283,7 @@ $result = $conn->query($sql);
                     </div>
 
                     <h2>Data Penerimaan Aset</h2>
-                    <a href="penerimaan_aset/tambah_penerimaan.php" class="btn btn-primary mb-3">Tambah Penerimaan</a>
+
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -336,7 +291,7 @@ $result = $conn->query($sql);
                                 <th>Nama Pengguna</th>
                                 <th>Kondisi</th>
                                 <th>Tanggal Penerimaan</th>
-                                <th>Aksi</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -352,9 +307,8 @@ $result = $conn->query($sql);
                                     echo "<td>" . date('d-m-Y', strtotime($row['tanggal_penerimaan'])) . "</td>";
 
                                     echo "<td>";
-                                    // echo "<a href='penerimaan_aset/detail_penerimaan.php?id=" . $row['id_penerimaan'] . "' class='btn btn-info btn-sm'>Detail</a> ";
-                                    echo "<a href='penerimaan_aset/edit_penerimaan.php?id=" . $row['id_penerimaan'] . "' class='btn btn-warning btn-sm'>Edit</a> ";
-                                    echo "<a href='penerimaan_aset/hapus_penerimaan.php?id=" . $row['id_penerimaan'] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"Apakah Anda yakin ingin menghapus data ini?\")'>Delete</a>";
+
+
                                     echo "</td>";
                                     echo "</tr>";
                                     $no++;

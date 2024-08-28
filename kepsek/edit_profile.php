@@ -1,9 +1,9 @@
 <?php
 session_start();
-include '../../koneksi.php';
+include '../koneksi.php';
 
 if (!isset($_SESSION['id_pengguna'])) {
-    header("Location: ../../kepsek/profile.php");
+    header("Location: ../kepsek/profile.php");
     exit();
 }
 
@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $update_query = "UPDATE pengguna SET nama_pengguna='$nama_pengguna', password='$password' WHERE id_pengguna='$id_pengguna'";
 
     if (mysqli_query($conn, $update_query)) {
-        echo "<script>alert('Profil berhasil diperbarui'); window.location='../../kepsek/profile.php';</script>";
+        echo "<script>alert('Profil berhasil diperbarui'); window.location='../kepsek/profile.php';</script>";
     } else {
         echo "Terjadi kesalahan saat memperbarui profil: " . mysqli_error($conn);
     }
@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                     <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                 </form>
-                <a href="../../kepsek/profile.php" class="btn btn-secondary mt-3">Kembali</a>
+                <a href="../kepsek/profile.php" class="btn btn-secondary mt-3">Kembali</a>
             </div>
         </div>
     </div>
