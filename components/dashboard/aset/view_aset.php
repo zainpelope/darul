@@ -73,12 +73,7 @@ if (isset($_GET['id'])) {
             <div class="sidebar-logo">
                 <!-- Logo Header -->
                 <div class="logo-header" data-background-color="dark">
-                    <a href="../../../index.html" class="logo">
-                        <img
-                            src="../../../assets/img/kaiadmin/logo_light.svg"
-                            alt="navbar brand"
-                            class="navbar-brand"
-                            height="20" />
+                    <h2 style="color: white; font-weight: bold;">SIM ASET</h2>
                     </a>
                     <div class="nav-toggle">
                         <button class="btn btn-toggle toggle-sidebar">
@@ -98,7 +93,7 @@ if (isset($_GET['id'])) {
                 <div class="sidebar-content">
                     <ul class="nav nav-secondary">
                         <li class="nav-item active">
-                            <a href="../../../index.html" class="collapsed" aria-expanded="false">
+                            <a href="../../../index.php" class="collapsed" aria-expanded="false">
                                 <i class="fas fa-home"></i>
                                 <p>Dashboard</p>
                             </a>
@@ -112,12 +107,12 @@ if (isset($_GET['id'])) {
                             <div class="collapse" id="base">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="components/avatars.html">
+                                        <a href="../../../components/pengadaan_aset/kebutuhan/kebutuhan_aset.php">
                                             <span class="sub-item">Kebutuhan Aset</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="components/buttons.html">
+                                    <a href="../../../components/pengadaan_aset/pengadaan/pengadaan_aset.php">
                                             <span class="sub-item">Pengadaan Aset</span>
                                         </a>
                                     </li>
@@ -126,25 +121,25 @@ if (isset($_GET['id'])) {
                         </li>
 
                         <li class="nav-item">
-                            <a href="../../../index.html">
+                        <a href="../../../components/penerimaan_aset.php">
                                 <i class="fas fa-th-list"></i>
                                 <p>Penerimaan Aset</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarLayouts">
+                        <a href="../../../components/pemeliharaan_aset.php">
                                 <i class="fas fa-th-list"></i>
                                 <p>Pemeliharaan Aset</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarLayouts">
+                        <a href="../../../components/penyusutan_aset.php">
                                 <i class="fas fa-th-list"></i>
                                 <p>Penyusutan Aset</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#sidebarLayouts">
+                        <a href="../../../components/penghapusan_aset.php">
                                 <i class="fas fa-th-list"></i>
                                 <p>Penghapusan Aset</p>
                             </a>
@@ -158,32 +153,32 @@ if (isset($_GET['id'])) {
                             <div class="collapse" id="forms">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="#">
+                                    <a href="../../../components/laporan_aset.php">
                                             <span class="sub-item">Laporan Aset</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                    <a href="../../../components/laporan_pengdaan.php">
                                             <span class="sub-item">Laporan Pengadaan</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                    <a href="../../../components/laporan_peneriman.php">
                                             <span class="sub-item">Laporan Penerimaan</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                    <a href="../../../components/laporan_pemelihraan.php">
                                             <span class="sub-item">Laporan Pemelihraan</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                    <a href="../../../components/laporan_penyusutan.php">
                                             <span class="sub-item">Laporan Penyusutan</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                    <a href="../../../components/laporan_penghapusan.php">
                                             <span class="sub-item">Laporan Penghapusan</span>
                                         </a>
                                     </li>
@@ -200,17 +195,17 @@ if (isset($_GET['id'])) {
                             <div class="collapse" id="pengaturan">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="#">
+                                    <a href="../../../components/kategori.php">
                                             <span class="sub-item">Kategori Aset</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                    <a href="../../../components/lokasi.php">
                                             <span class="sub-item">Lokasi Aset</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                    <a href="../../../components/profile.php">
                                             <span class="sub-item">Pengguna</span>
                                         </a>
                                     </li>
@@ -228,7 +223,7 @@ if (isset($_GET['id'])) {
                 <div class="main-header-logo">
                     <!-- Logo Header -->
                     <div class="logo-header" data-background-color="dark">
-                        <a href="../../../index.html" class="logo">
+                        <a href="../../../index.php" class="logo">
                             <img
                                 src="../../../assets/img/kaiadmin/logo_light.svg"
                                 alt="navbar brand"
@@ -308,14 +303,14 @@ if (isset($_GET['id'])) {
                                     </div>
                                     <span class="profile-username">
                                         <span class="op-7">Hi,</span>
-                                        <span class="fw-bold">Hizrian</span>
+                                        <span class="fw-bold">Mohammad Halil</span>
                                     </span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-user animated fadeIn">
                                     <div class="dropdown-user-scroll scrollbar-outer">
 
 
-                                        <a class="dropdown-item" href="#">Logout</a>
+                                        <a class="dropdown-item" href="../../../login.php">Logout</a>
 
                                     </div>
                                 </ul>

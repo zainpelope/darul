@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="sidebar-logo">
                 <!-- Logo Header -->
                 <div class="logo-header" data-background-color="dark">
-                    <a href="../../../index.html" class="logo">
+                    <a href="../../../index.php" class="logo">
                         <img
                             src="../../../assets/img/kaiadmin/logo_light.svg"
                             alt="navbar brand"
@@ -118,27 +118,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="sidebar-wrapper scrollbar scrollbar-inner">
                 <div class="sidebar-content">
                     <ul class="nav nav-secondary">
-                        <li class="nav-item">
-                            <a href="../../../index.html" class="collapsed" aria-expanded="false">
+                        <li class="nav-item active">
+                            <a href="../../../index.php" class="collapsed" aria-expanded="false">
                                 <i class="fas fa-home"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
-
-                        <li class="nav-item active submenu">
+                        <li class="nav-item">
                             <a data-bs-toggle="collapse" href="#base">
                                 <i class="fas fa-layer-group"></i>
                                 <p>Pengadaan Aset</p>
                                 <span class="caret"></span>
                             </a>
-                            <div class="collapse show" id="base">
+                            <div class="collapse" id="base">
                                 <ul class="nav nav-collapse">
                                     <li>
                                         <a href="../../../components/pengadaan_aset/kebutuhan/kebutuhan_aset.php">
                                             <span class="sub-item">Kebutuhan Aset</span>
                                         </a>
                                     </li>
-                                    <li class="active">
+                                    <li>
                                         <a href="../../../components/pengadaan_aset/pengadaan/pengadaan_aset.php">
                                             <span class="sub-item">Pengadaan Aset</span>
                                         </a>
@@ -148,26 +147,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </li>
 
                         <li class="nav-item">
-                            <a href="../../../index.html">
+                            <a href="../../../components/penerimaan_aset.php">
                                 <i class="fas fa-th-list"></i>
                                 <p>Penerimaan Aset</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarLayouts">
+                            <a href="../../../components/pemeliharaan_aset.php">
                                 <i class="fas fa-th-list"></i>
                                 <p>Pemeliharaan Aset</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarLayouts">
+                            <a href="../../../components/penyusutan_aset.php">
                                 <i class="fas fa-th-list"></i>
                                 <p>Penyusutan Aset</p>
                             </a>
                         </li>
-
                         <li class="nav-item">
-                            <a href="#sidebarLayouts">
+                            <a href="../../../components/penghapusan_aset.php">
                                 <i class="fas fa-th-list"></i>
                                 <p>Penghapusan Aset</p>
                             </a>
@@ -181,32 +179,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="collapse" id="forms">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="#">
+                                        <a href="../../../components/laporan_aset.php">
                                             <span class="sub-item">Laporan Aset</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <a href="../../../components/laporan_pengdaan.php">
                                             <span class="sub-item">Laporan Pengadaan</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <a href="../../../components/laporan_peneriman.php">
                                             <span class="sub-item">Laporan Penerimaan</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <a href="../../../components/laporan_pemelihraan.php">
                                             <span class="sub-item">Laporan Pemelihraan</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <a href="../../../components/laporan_penyusutan.php">
                                             <span class="sub-item">Laporan Penyusutan</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <a href="../../../components/laporan_penghapusan.php">
                                             <span class="sub-item">Laporan Penghapusan</span>
                                         </a>
                                     </li>
@@ -223,17 +221,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="collapse" id="pengaturan">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="#">
+                                        <a href="../../../components/kategori.php">
                                             <span class="sub-item">Kategori Aset</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <a href="../../../components/lokasi.php">
                                             <span class="sub-item">Lokasi Aset</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <a href="../../../components/profile.php">
                                             <span class="sub-item">Pengguna</span>
                                         </a>
                                     </li>
@@ -251,7 +249,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="main-header-logo">
                     <!-- Logo Header -->
                     <div class="logo-header" data-background-color="dark">
-                        <a href="../../../index.html" class="logo">
+                        <a href="../../../index.php" class="logo">
                             <img
                                 src="../../../assets/img/kaiadmin/logo_light.svg"
                                 alt="navbar brand"

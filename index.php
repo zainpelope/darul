@@ -55,11 +55,7 @@ include 'koneksi.php';
         <!-- Logo Header -->
         <div class="logo-header" data-background-color="dark">
           <a href="index.php" class="logo">
-            <img
-              src="assets/img/kaiadmin/logo_light.svg"
-              alt="navbar brand"
-              class="navbar-brand"
-              height="20" />
+            <h2 style="color: white; font-weight: bold;">SIM ASET</h2>
           </a>
           <div class="nav-toggle">
             <button class="btn btn-toggle toggle-sidebar">
@@ -282,25 +278,12 @@ include 'koneksi.php';
                   </div>
                   <span class="profile-username">
                     <span class="op-7">Hi,</span>
-                    <span class="fw-bold">Nurul Hidayat</span>
+                    <span class="fw-bold">Mohammad Halil</span>
                   </span>
                 </a>
                 <ul class="dropdown-menu dropdown-user animated fadeIn">
                   <div class="dropdown-user-scroll scrollbar-outer">
-                    <li>
-                      <div class="user-box">
-                        <div class="avatar-lg">
-                          <img
-                            src="assets/img/profile.jpg"
-                            alt="image profile"
-                            class="avatar-img rounded" />
-                        </div>
-                        <div class="u-text">
-                          <h4>Nurul Hidayat</h4>
-                          <p class="text-muted">dayat@gmail.com</p>
-                        </div>
-                      </div>
-                    </li>
+
                     <li>
                       <a class="dropdown-item" href="#">Logout</a>
                     </li>

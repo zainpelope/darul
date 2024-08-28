@@ -140,32 +140,32 @@ include '../../../koneksi.php';
                             <div class="collapse" id="forms">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="#">
+                                        <a href="../../../components/laporan_aset.php">
                                             <span class="sub-item">Laporan Aset</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <a href="../../../components/laporan_pengadaan.php">
                                             <span class="sub-item">Laporan Pengadaan</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <a href="../../../components/laporan_penerimaan.php">
                                             <span class="sub-item">Laporan Penerimaan</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
-                                            <span class="sub-item">Laporan Pemelihraan</span>
+                                        <a href="../../../components/laporan_pemeliharaan.php">
+                                            <span class="sub-item">Laporan Pemeliharaan</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <a href="../../../components/laporan_penyusutan.php">
                                             <span class="sub-item">Laporan Penyusutan</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <a href="../../../components/laporan_penghapusan.php">
                                             <span class="sub-item">Laporan Penghapusan</span>
                                         </a>
                                     </li>
@@ -182,17 +182,17 @@ include '../../../koneksi.php';
                             <div class="collapse" id="pengaturan">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="#">
+                                        <a href="../../../components/kategori.php">
                                             <span class="sub-item">Kategori Aset</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <a href="../../../components/lokasi.php">
                                             <span class="sub-item">Lokasi Aset</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <a href="../../../components/profile.php">
                                             <span class="sub-item">Pengguna</span>
                                         </a>
                                     </li>

@@ -128,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="../../../components/buttons.php">
+                                        <a href="../../../components/pengadaan_aset/pengadaan/pengadaan_aset.php">
                                             <span class="sub-item">Pengadaan Aset</span>
                                         </a>
                                     </li>
@@ -137,25 +137,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </li>
 
                         <li class="nav-item">
-                            <a href="../../../index.php">
+                            <a href="../../../components/penerimaan_aset.php">
                                 <i class="fas fa-th-list"></i>
                                 <p>Penerimaan Aset</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarLayouts">
+                            <a href="../../../components/pemeliharaan_aset.php">
                                 <i class="fas fa-th-list"></i>
                                 <p>Pemeliharaan Aset</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarLayouts">
+                            <a href="../../../components/penyusutan_aset.php">
                                 <i class="fas fa-th-list"></i>
                                 <p>Penyusutan Aset</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#sidebarLayouts">
+                            <a href="../../../components/penghapusan_aset.php">
                                 <i class="fas fa-th-list"></i>
                                 <p>Penghapusan Aset</p>
                             </a>
@@ -170,32 +170,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <div class="collapse" id="forms">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="#">
+                                        <a href="../../../components/laporan_aset.php">
                                             <span class="sub-item">Laporan Aset</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <a href="../../../components/laporan_pengadaan.php">
                                             <span class="sub-item">Laporan Pengadaan</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <a href="../../../components/laporan_penerimaan.php">
                                             <span class="sub-item">Laporan Penerimaan</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
-                                            <span class="sub-item">Laporan Pemelihraan</span>
+                                        <a href="../../../components/laporan_pemeliharaan.php">
+                                            <span class="sub-item">Laporan Pemeliharaan</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <a href="../../../components/laporan_penyusutan.php">
                                             <span class="sub-item">Laporan Penyusutan</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <a href="../../../components/laporan_penghapusan.php">
                                             <span class="sub-item">Laporan Penghapusan</span>
                                         </a>
                                     </li>
@@ -212,17 +212,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <div class="collapse" id="pengaturan">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="#">
+                                        <a href="../../../components/kategori.php">
                                             <span class="sub-item">Kategori Aset</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <a href="../../../components/lokasi.php">
                                             <span class="sub-item">Lokasi Aset</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <a href="../../../components/profile.php">
                                             <span class="sub-item">Pengguna</span>
                                         </a>
                                     </li>
