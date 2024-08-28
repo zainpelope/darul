@@ -1,7 +1,7 @@
 <?php
 include '../koneksi.php';
 
-$sql = "SELECT p.id_penerimaan, pa.id_pengadaan, u.nama_pengguna, p.tanggal_penerimaan, p.kondisi, k.deskripsi_kebutuhan
+$sql = "SELECT p.id_penerimaan, pa.vendor, pa.jumlah, u.nama_pengguna, p.tanggal_penerimaan, p.kondisi, k.deskripsi_kebutuhan
         FROM penerimaan_aset p
         JOIN pengadaan_aset pa ON p.id_pengadaan = pa.id_pengadaan
         JOIN kebutuhan_aset k ON pa.id_kebutuhan = k.id_kebutuhan
@@ -334,12 +334,12 @@ $result = $conn->query($sql);
             <thead>
               <tr>
                 <th>No.</th>
-                <th>Nama</th>
-                <th>Aset</th>
+                <th>Nama Pengguna</th>
+                <th>Deskripsi Aset</th>
+                <th>Vendor</th>
+                <th>Jumlah</th>
                 <th>Tanggal Penerimaan</th>
                 <th>Kondisi</th>
-
-
                 <th>Aksi</th>
               </tr>
             </thead>
@@ -352,10 +352,10 @@ $result = $conn->query($sql);
                   echo "<td>" . $no . "</td>";
                   echo "<td>" . htmlspecialchars($row['nama_pengguna']) . "</td>";
                   echo "<td>" . htmlspecialchars($row['deskripsi_kebutuhan']) . "</td>";
-
+                  echo "<td>" . htmlspecialchars($row['vendor']) . "</td>"; // Menampilkan vendor
+                  echo "<td>" . htmlspecialchars($row['jumlah']) . "</td>"; // Menampilkan jumlah
                   echo "<td>" . date('d-m-Y', strtotime($row['tanggal_penerimaan'])) . "</td>";
                   echo "<td>" . htmlspecialchars($row['kondisi']) . "</td>";
-
                   echo "<td>";
                   // echo "<a href='penerimaan_aset/detail_penerimaan.php?id=" . $row['id_penerimaan'] . "' class='btn btn-info btn-sm'>Detail</a> ";
                   echo "<a href='penerimaan_aset/edit_penerimaan.php?id=" . $row['id_penerimaan'] . "' class='btn btn-warning btn-sm'>Edit</a> ";
@@ -365,7 +365,7 @@ $result = $conn->query($sql);
                   $no++;
                 }
               } else {
-                echo "<tr><td colspan='6'>Tidak ada data</td></tr>";
+                echo "<tr><td colspan='8'>Tidak ada data</td></tr>";
               }
               ?>
             </tbody>

@@ -1,11 +1,9 @@
 <?php
 include '../../koneksi.php';
 
-$sql_pengadaan = "SELECT p.id_pengadaan, k.deskripsi_kebutuhan 
-                  FROM pengadaan_aset p 
-                  JOIN kebutuhan_aset k ON p.id_kebutuhan = k.id_kebutuhan";
+$sql_pengadaan = "SELECT p.id_pengadaan, p.vendor, p.jumlah 
+                  FROM pengadaan_aset p";
 $result_pengadaan = $conn->query($sql_pengadaan);
-
 
 $sql_pengguna = "SELECT p.id_pengguna, p.nama_pengguna 
                  FROM pengguna p
@@ -13,17 +11,20 @@ $sql_pengguna = "SELECT p.id_pengguna, p.nama_pengguna
                  WHERE h.nama_role IN ('Tata Usaha', 'Kepala Sekolah')";
 $result_pengguna = $conn->query($sql_pengguna);
 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_pengadaan = $_POST['id_pengadaan'];
     $id_pengguna = $_POST['id_pengguna'];
     $tanggal_penerimaan = $_POST['tanggal_penerimaan'];
     $kondisi = $_POST['kondisi'];
 
+
     $sql = "INSERT INTO penerimaan_aset (id_pengadaan, id_pengguna, tanggal_penerimaan, kondisi) 
             VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("iiss", $id_pengadaan, $id_pengguna, $tanggal_penerimaan, $kondisi);
     $stmt->execute();
+
 
     header("Location: ../../components/penerimaan_aset.php");
     exit();
@@ -82,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <!-- Logo Header -->
                 <div class="logo-header" data-background-color="dark">
                     <a href="../../index.php" class="logo">
-                    <h2 style="color: white; font-weight: bold;">SIM ASET</h2>
+                        <h2 style="color: white; font-weight: bold;">SIM ASET</h2>
 
                     </a>
                     <div class="nav-toggle">
@@ -234,7 +235,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <!-- Logo Header -->
                     <div class="logo-header" data-background-color="dark">
                         <a href="../../index.php" class="logo">
-                        <h2 style="color: white; font-weight: bold;">SIM ASET</h2>
+                            <h2 style="color: white; font-weight: bold;">SIM ASET</h2>
 
                         </a>
                         <div class="nav-toggle">
@@ -354,14 +355,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <h2>Tambah Penerimaan Aset</h2>
                     <form action="tambah_penerimaan.php" method="post">
+                        <!-- Pilihan Vendor dan Jumlah -->
                         <div class="mb-3">
-                            <label for="id_pengadaan" class="form-label">Pengadaan</label>
+                            <label for="id_pengadaan" class="form-label">Vendor</label>
                             <select class="form-select" id="id_pengadaan" name="id_pengadaan" required>
-                                <option value="">Pilih Pengadaan</option>
+                                <option value="">Pilih Vendor</option>
                                 <?php
                                 if ($result_pengadaan->num_rows > 0) {
                                     while ($row = $result_pengadaan->fetch_assoc()) {
-                                        echo "<option value='" . $row['id_pengadaan'] . "'>" . $row['deskripsi_kebutuhan'] . "</option>";
+                                        // Tampilkan vendor dan jumlah sebagai opsi
+                                        echo "<option value='" . $row['id_pengadaan'] . "'>" . $row['vendor'] . " - Jumlah: " . $row['jumlah'] . "</option>";
                                     }
                                 } else {
                                     echo "<option value='' disabled>Tidak ada data</option>";
@@ -369,6 +372,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 ?>
                             </select>
                         </div>
+                        <!-- Pilihan Pengguna -->
                         <div class="mb-3">
                             <label for="id_pengguna" class="form-label">Pengguna</label>
                             <select class="form-select" id="id_pengguna" name="id_pengguna" required>
@@ -384,14 +388,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 ?>
                             </select>
                         </div>
+                        <!-- Input Tanggal Penerimaan -->
                         <div class="mb-3">
                             <label for="tanggal_penerimaan" class="form-label">Tanggal Penerimaan</label>
                             <input type="date" class="form-control" id="tanggal_penerimaan" name="tanggal_penerimaan" required>
                         </div>
+                        <!-- Input Kondisi -->
                         <div class="mb-3">
                             <label for="kondisi" class="form-label">Kondisi</label>
                             <input type="text" class="form-control" id="kondisi" name="kondisi" required>
                         </div>
+                        <!-- Tombol Simpan dan Kembali -->
                         <button type="submit" class="btn btn-primary">Simpan</button>
                         <a href="../../components/penerimaan_aset.php" class="btn btn-secondary">Kembali</a>
                     </form>
