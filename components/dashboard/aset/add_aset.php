@@ -13,13 +13,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $status = $_POST['status'];
     $id_lokasi = $_POST['id_lokasi'];
     $id_kategori = $_POST['id_kategori'];
-    $id_penerimaan = $_POST['id_penerimaan'];
     $generate_qr = isset($_POST['generate_qr']);
+
 
     if ($generate_qr) {
         $kode_qr = 'QR-' . uniqid();
         $qrCodeDir = __DIR__ . '/images/qr_codes/';
         $qrCodeFile = $qrCodeDir . $kode_qr . '.png';
+
 
         if (!file_exists($qrCodeDir)) {
             mkdir($qrCodeDir, 0755, true);
@@ -28,8 +29,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         QRcode::png($kode_qr, $qrCodeFile);
     }
 
+
+    $id_penerimaan = NULL;
+
+
     $sql = "INSERT INTO aset (nama_aset, deskripsi, nilai_awal, nilai_sekarang, nomor_seri, status, id_lokasi, id_kategori, id_penerimaan, kode_qr) 
-            VALUES ('$nama_aset', '$deskripsi', '$nilai_awal', '$nilai_sekarang', '$nomor_seri', '$status', '$id_lokasi', '$id_kategori', '$id_penerimaan', '$kode_qr')";
+            VALUES ('$nama_aset', '$deskripsi', '$nilai_awal', '$nilai_sekarang', '$nomor_seri', '$status', '$id_lokasi', '$id_kategori', NULL, '$kode_qr')";
+
 
     if ($conn->query($sql) === TRUE) {
         header("Location: ../../../index.php");
@@ -40,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $conn->close();
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -398,21 +405,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     ?>
                                 </select>
                             </div>
-                            <div class="mb-3">
-                                <label for="id_penerimaan" class="form-label">Penerimaan</label>
-                                <select class="form-control" id="id_penerimaan" name="id_penerimaan" required>
-                                    <option value="">Silakan pilih penerimaan aset</option>
-                                    <?php
-                                    $penerimaanQuery = "SELECT id_penerimaan, DATE_FORMAT(tanggal_penerimaan, '%d-%m-%Y') AS tanggal_penerimaan FROM penerimaan_aset";
-                                    $penerimaanResult = $conn->query($penerimaanQuery);
-                                    if ($penerimaanResult->num_rows > 0) {
-                                        while ($row = $penerimaanResult->fetch_assoc()) {
-                                            echo '<option value="' . $row['id_penerimaan'] . '">' . $row['tanggal_penerimaan'] . '</option>';
-                                        }
-                                    }
-                                    ?>
-                                </select>
-                            </div>
+
                             <div class="mb-3">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="generate_qr" name="generate_qr">
