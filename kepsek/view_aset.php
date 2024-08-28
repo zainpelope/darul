@@ -92,12 +92,8 @@ if (isset($_GET['id'])) {
             <div class="sidebar-wrapper scrollbar scrollbar-inner">
                 <div class="sidebar-content">
                     <ul class="nav nav-secondary">
-                        <li class="nav-item active">
-                            <a
-                                data-bs-toggle="collapse"
-                                href="kepsek.php"
-                                class="collapsed"
-                                aria-expanded="false">
+                        <li class="nav-item">
+                            <a href="../kepsek.php" class="collapsed" aria-expanded="false">
                                 <i class="fas fa-home"></i>
                                 <p>Dashboard</p>
                             </a>
