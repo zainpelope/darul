@@ -1,9 +1,23 @@
 <?php
 include '../../koneksi.php';
 
-$sql_pengadaan = "SELECT p.id_pengadaan, k.deskripsi_kebutuhan 
-                  FROM pengadaan_aset p 
-                  JOIN kebutuhan_aset k ON p.id_kebutuhan = k.id_kebutuhan";
+
+$id_penerimaan = $_GET['id'] ?? '';
+
+if (!$id_penerimaan) {
+    header("Location: ../../components/penerimaan_aset.php");
+    exit();
+}
+
+
+$sql = "SELECT * FROM penerimaan_aset WHERE id_penerimaan = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $id_penerimaan);
+$stmt->execute();
+$penerimaan = $stmt->get_result()->fetch_assoc();
+
+
+$sql_pengadaan = "SELECT id_pengadaan, vendor, jumlah FROM pengadaan_aset";
 $result_pengadaan = $conn->query($sql_pengadaan);
 
 
@@ -13,22 +27,23 @@ $sql_pengguna = "SELECT p.id_pengguna, p.nama_pengguna
                  WHERE h.nama_role IN ('Tata Usaha', 'Kepala Sekolah')";
 $result_pengguna = $conn->query($sql_pengguna);
 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_pengadaan = $_POST['id_pengadaan'];
     $id_pengguna = $_POST['id_pengguna'];
     $tanggal_penerimaan = $_POST['tanggal_penerimaan'];
     $kondisi = $_POST['kondisi'];
 
-    $sql = "INSERT INTO penerimaan_aset (id_pengadaan, id_pengguna, tanggal_penerimaan, kondisi) 
-            VALUES (?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iiss", $id_pengadaan, $id_pengguna, $tanggal_penerimaan, $kondisi);
-    $stmt->execute();
+    $sql_update = "UPDATE penerimaan_aset SET id_pengadaan = ?, id_pengguna = ?, tanggal_penerimaan = ?, kondisi = ? WHERE id_penerimaan = ?";
+    $stmt_update = $conn->prepare($sql_update);
+    $stmt_update->bind_param("iissi", $id_pengadaan, $id_pengguna, $tanggal_penerimaan, $kondisi, $id_penerimaan);
+    $stmt_update->execute();
 
     header("Location: ../../components/penerimaan_aset.php");
     exit();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -353,15 +368,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </ul>
                     </div>
                     <h2>Edit Penerimaan Aset</h2>
-                    <form action="tambah_penerimaan.php" method="post">
+                    <form action="edit_penerimaan.php?id=<?php echo htmlspecialchars($id_penerimaan); ?>" method="post">
+
                         <div class="mb-3">
-                            <label for="id_pengadaan" class="form-label">Pengadaan</label>
+                            <label for="id_pengadaan" class="form-label">Vendor</label>
                             <select class="form-select" id="id_pengadaan" name="id_pengadaan" required>
-                                <option value="">Pilih Pengadaan</option>
+                                <option value="">Pilih Vendor</option>
                                 <?php
                                 if ($result_pengadaan->num_rows > 0) {
                                     while ($row = $result_pengadaan->fetch_assoc()) {
-                                        echo "<option value='" . $row['id_pengadaan'] . "'>" . $row['deskripsi_kebutuhan'] . "</option>";
+                                        $selected = ($row['id_pengadaan'] == $penerimaan['id_pengadaan']) ? 'selected' : '';
+                                        echo "<option value='" . $row['id_pengadaan'] . "' $selected>" . $row['vendor'] . " - Jumlah: " . $row['jumlah'] . "</option>";
                                     }
                                 } else {
                                     echo "<option value='' disabled>Tidak ada data</option>";
@@ -369,6 +386,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 ?>
                             </select>
                         </div>
+
                         <div class="mb-3">
                             <label for="id_pengguna" class="form-label">Pengguna</label>
                             <select class="form-select" id="id_pengguna" name="id_pengguna" required>
@@ -376,7 +394,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <?php
                                 if ($result_pengguna->num_rows > 0) {
                                     while ($row = $result_pengguna->fetch_assoc()) {
-                                        echo "<option value='" . $row['id_pengguna'] . "'>" . $row['nama_pengguna'] . "</option>";
+                                        $selected = ($row['id_pengguna'] == $penerimaan['id_pengguna']) ? 'selected' : '';
+                                        echo "<option value='" . $row['id_pengguna'] . "' $selected>" . $row['nama_pengguna'] . "</option>";
                                     }
                                 } else {
                                     echo "<option value='' disabled>Tidak ada data</option>";
@@ -384,14 +403,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 ?>
                             </select>
                         </div>
+
                         <div class="mb-3">
                             <label for="tanggal_penerimaan" class="form-label">Tanggal Penerimaan</label>
-                            <input type="date" class="form-control" id="tanggal_penerimaan" name="tanggal_penerimaan" required>
+                            <input type="date" class="form-control" id="tanggal_penerimaan" name="tanggal_penerimaan" value="<?php echo htmlspecialchars($penerimaan['tanggal_penerimaan']); ?>" required>
                         </div>
+
                         <div class="mb-3">
                             <label for="kondisi" class="form-label">Kondisi</label>
-                            <input type="text" class="form-control" id="kondisi" name="kondisi" required>
+                            <input type="text" class="form-control" id="kondisi" name="kondisi" value="<?php echo htmlspecialchars($penerimaan['kondisi']); ?>" required>
                         </div>
+
                         <button type="submit" class="btn btn-primary">Simpan</button>
                         <a href="../../components/penerimaan_aset.php" class="btn btn-secondary">Kembali</a>
                     </form>

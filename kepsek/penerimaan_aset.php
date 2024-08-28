@@ -1,9 +1,10 @@
 <?php
 include '../koneksi.php';
 
-$sql = "SELECT p.id_penerimaan, pa.id_pengadaan, u.nama_pengguna, p.tanggal_penerimaan, p.kondisi
+$sql = "SELECT p.id_penerimaan, pa.vendor, pa.jumlah, u.nama_pengguna, p.tanggal_penerimaan, p.kondisi, k.deskripsi_kebutuhan
         FROM penerimaan_aset p
         JOIN pengadaan_aset pa ON p.id_pengadaan = pa.id_pengadaan
+        JOIN kebutuhan_aset k ON pa.id_kebutuhan = k.id_kebutuhan
         JOIN pengguna u ON p.id_pengguna = u.id_pengguna";
 
 $result = $conn->query($sql);
@@ -285,8 +286,11 @@ $result = $conn->query($sql);
                             <tr>
                                 <th>No.</th>
                                 <th>Nama Pengguna</th>
-                                <th>Kondisi</th>
+                                <th>Deskripsi Aset</th>
+                                <th>Vendor</th>
+                                <th>Jumlah</th>
                                 <th>Tanggal Penerimaan</th>
+                                <th>Kondisi</th>
 
                             </tr>
                         </thead>
@@ -297,20 +301,20 @@ $result = $conn->query($sql);
                                 while ($row = $result->fetch_assoc()) {
                                     echo "<tr>";
                                     echo "<td>" . $no . "</td>";
-
                                     echo "<td>" . htmlspecialchars($row['nama_pengguna']) . "</td>";
-                                    echo "<td>" . htmlspecialchars($row['kondisi']) . "</td>";
+                                    echo "<td>" . htmlspecialchars($row['deskripsi_kebutuhan']) . "</td>";
+                                    echo "<td>" . htmlspecialchars($row['vendor']) . "</td>"; // Menampilkan vendor
+                                    echo "<td>" . htmlspecialchars($row['jumlah']) . "</td>"; // Menampilkan jumlah
                                     echo "<td>" . date('d-m-Y', strtotime($row['tanggal_penerimaan'])) . "</td>";
-
+                                    echo "<td>" . htmlspecialchars($row['kondisi']) . "</td>";
                                     echo "<td>";
-
 
                                     echo "</td>";
                                     echo "</tr>";
                                     $no++;
                                 }
                             } else {
-                                echo "<tr><td colspan='6'>Tidak ada data</td></tr>";
+                                echo "<tr><td colspan='8'>Tidak ada data</td></tr>";
                             }
                             ?>
                         </tbody>
