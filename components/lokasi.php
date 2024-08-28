@@ -249,7 +249,7 @@ $result = $conn->query($sql);
                                         <img src="../assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle">
                                     </div>
                                     <span class="profile-username">
-                                        <span class="op-7">Hi,</span> <span class="fw-bold">Hizrian</span>
+                                        <span class="op-7">Hi,</span> <span class="fw-bold">Mohamamad Halil</span>
                                     </span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-user animated fadeIn">

@@ -58,12 +58,8 @@ $result = $conn->query($sql);
             <div class="sidebar-logo">
                 <!-- Logo Header -->
                 <div class="logo-header" data-background-color="dark">
-                    <a href="../../../index.php" class="logo">
-                        <img
-                            src="../../../assets/img/kaiadmin/logo_light.svg"
-                            alt="navbar brand"
-                            class="navbar-brand"
-                            height="20" />
+                    <h2 style="color: white; font-weight: bold;">SIM ASET</h2>
+
                     </a>
                     <div class="nav-toggle">
                         <button class="btn btn-toggle toggle-sidebar">
@@ -216,11 +212,8 @@ $result = $conn->query($sql);
                     <!-- Logo Header -->
                     <div class="logo-header" data-background-color="dark">
                         <a href="../../../index.php" class="logo">
-                            <img
-                                src="../../../assets/img/kaiadmin/logo_light.svg"
-                                alt="navbar brand"
-                                class="navbar-brand"
-                                height="20" />
+                            <h2 style="color: white; font-weight: bold;">SIM ASET</h2>
+
                         </a>
                         <div class="nav-toggle">
                             <button class="btn btn-toggle toggle-sidebar">
@@ -294,7 +287,7 @@ $result = $conn->query($sql);
                                     </div>
                                     <span class="profile-username">
                                         <span class="op-7">Hi,</span>
-                                        <span class="fw-bold">Hidffgdgfzrian</span>
+                                        <span class="fw-bold">Mohammad Halil</span>
                                     </span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -311,229 +304,252 @@ $result = $conn->query($sql);
 
             <div class="container">
                 <div class="page-inner">
-                    <div class="container">
-                        <h2>Data Pengadaan Aset</h2>
-                        <a href="../../../components/dashboard/aset/add_aset.php" class="btn btn-success mb-3">Tambah Aset</a>
-                        <a href="../../../components/pengadaan_aset/pengadaan/tambah_pengadaan.php" class="btn btn-primary mb-3">Tambah Pengadaan</a>
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>Aset</th>
-                                    <th>Vendor</th>
-                                    <th>Jumlah</th>
-                                    <th>Status</th>
-                                    <th>Tanggal Pengadaan</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                if ($result->num_rows > 0) {
-                                    $no = 1;
-                                    while ($row = $result->fetch_assoc()) {
-                                        $backgroundColor = ($row['status'] == 'Diterima') ? '#28a745' : '#dc3545';
-                                        $textColor = '#ffffff';
-                                        echo "<tr>";
-                                        echo "<td>" . $no . "</td>";
-                                        echo "<td>" . htmlspecialchars($row['deskripsi_kebutuhan']) . "</td>";
-                                        echo "<td>" . htmlspecialchars($row['vendor']) . "</td>";
-                                        echo "<td>" . htmlspecialchars($row['jumlah']) . "</td>";
-                                        echo '<td><span style="background-color: ' . $backgroundColor . '; color: ' . $textColor . '; padding: 2px 6px; border-radius: 4px; font-style: italic;">' . htmlspecialchars($row['status']) . '</span></td>';
-                                        echo "<td>" . date('d-m-Y', strtotime($row['tanggal_pengadaan'])) . "</td>";
-                                        echo "<td>";
-                                        echo "<a href='../../../components/pengadaan_aset/pengadaan/detail_pengadaan.php?id=" . $row['id_pengadaan'] . "' class='btn btn-info btn-sm'>Detail</a> ";
-                                        echo "<a href='../../../components/pengadaan_aset/pengadaan/edit_pengadaan.php?id=" . $row['id_pengadaan'] . "' class='btn btn-warning btn-sm'>Edit</a> ";
-                                        echo "<a href='../../../components/pengadaan_aset/pengadaan/hapus_pengadaan.php?id=" . $row['id_pengadaan'] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"Apakah Anda yakin ingin menghapus data ini?\")'>Delete</a>";
-                                        echo "</td>";
-                                        echo "</tr>";
-                                        $no++;
-                                    }
-                                } else {
-                                    echo "<tr><td colspan='7'>Tidak ada data</td></tr>";
+
+                    <div class="page-header">
+                        <h3 class="fw-bold mb-3">Pengadaan Aset</h3>
+                        <ul class="breadcrumbs mb-3">
+                            <li class="nav-home">
+                                <a href="#">
+                                    <i class="icon-home"></i>
+                                </a>
+                            </li>
+                            <li class="separator">
+                                <i class="icon-arrow-right"></i>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#">Pengadaan</a>
+                            </li>
+                            <li class="separator">
+                                <i class="icon-arrow-right"></i>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../../components/pengadaan_aset/pengadaan/pengadaan_aset.php">Pengadaan Aset</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <h2>Data Pengadaan Aset</h2>
+                    <a href="../../../components/dashboard/aset/add_aset.php" class="btn btn-success mb-3">Tambah Aset</a>
+                    <a href="../../../components/pengadaan_aset/pengadaan/tambah_pengadaan.php" class="btn btn-primary mb-3">Tambah Pengadaan</a>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Aset</th>
+                                <th>Vendor</th>
+                                <th>Jumlah</th>
+                                <th>Status</th>
+                                <th>Tanggal Pengadaan</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            if ($result->num_rows > 0) {
+                                $no = 1;
+                                while ($row = $result->fetch_assoc()) {
+                                    $backgroundColor = ($row['status'] == 'Diterima') ? '#28a745' : '#dc3545';
+                                    $textColor = '#ffffff';
+                                    echo "<tr>";
+                                    echo "<td>" . $no . "</td>";
+                                    echo "<td>" . htmlspecialchars($row['deskripsi_kebutuhan']) . "</td>";
+                                    echo "<td>" . htmlspecialchars($row['vendor']) . "</td>";
+                                    echo "<td>" . htmlspecialchars($row['jumlah']) . "</td>";
+                                    echo '<td><span style="background-color: ' . $backgroundColor . '; color: ' . $textColor . '; padding: 2px 6px; border-radius: 4px; font-style: italic;">' . htmlspecialchars($row['status']) . '</span></td>';
+                                    echo "<td>" . date('d-m-Y', strtotime($row['tanggal_pengadaan'])) . "</td>";
+                                    echo "<td>";
+                                    echo "<a href='../../../components/pengadaan_aset/pengadaan/detail_pengadaan.php?id=" . $row['id_pengadaan'] . "' class='btn btn-info btn-sm'>Detail</a> ";
+                                    echo "<a href='../../../components/pengadaan_aset/pengadaan/edit_pengadaan.php?id=" . $row['id_pengadaan'] . "' class='btn btn-warning btn-sm'>Edit</a> ";
+                                    echo "<a href='../../../components/pengadaan_aset/pengadaan/hapus_pengadaan.php?id=" . $row['id_pengadaan'] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"Apakah Anda yakin ingin menghapus data ini?\")'>Delete</a>";
+                                    echo "</td>";
+                                    echo "</tr>";
+                                    $no++;
                                 }
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
-
+                            } else {
+                                echo "<tr><td colspan='7'>Tidak ada data</td></tr>";
+                            }
+                            ?>
+                        </tbody>
+                    </table>
                 </div>
-            </div>
 
-
-            <footer class="footer">
-                <div class="container-fluid d-flex justify-content-between">
-                    <div class="copyright">
-                        Copyright @ 2024
-                        <a href="#">MI Darul Ulum</a>. All rights reserved
-                    </div>
-
-                    <div>Version 1.0</div>
-                </div>
-            </footer>
-        </div>
-
-        <!-- Custom template | don't include it in your project! -->
-        <div class="custom-template">
-            <div class="title">Settings</div>
-            <div class="custom-content">
-                <div class="switcher">
-                    <div class="switch-block">
-                        <h4>Logo Header</h4>
-                        <div class="btnSwitch">
-                            <button
-                                type="button"
-                                class="selected changeLogoHeaderColor"
-                                data-color="dark"></button>
-                            <button
-                                type="button"
-                                class="selected changeLogoHeaderColor"
-                                data-color="blue"></button>
-                            <button
-                                type="button"
-                                class="changeLogoHeaderColor"
-                                data-color="purple"></button>
-                            <button
-                                type="button"
-                                class="changeLogoHeaderColor"
-                                data-color="light-blue"></button>
-                            <button
-                                type="button"
-                                class="changeLogoHeaderColor"
-                                data-color="green"></button>
-                            <button
-                                type="button"
-                                class="changeLogoHeaderColor"
-                                data-color="orange"></button>
-                            <button
-                                type="button"
-                                class="changeLogoHeaderColor"
-                                data-color="red"></button>
-                            <button
-                                type="button"
-                                class="changeLogoHeaderColor"
-                                data-color="white"></button>
-                            <br />
-                            <button
-                                type="button"
-                                class="changeLogoHeaderColor"
-                                data-color="dark2"></button>
-                            <button
-                                type="button"
-                                class="changeLogoHeaderColor"
-                                data-color="blue2"></button>
-                            <button
-                                type="button"
-                                class="changeLogoHeaderColor"
-                                data-color="purple2"></button>
-                            <button
-                                type="button"
-                                class="changeLogoHeaderColor"
-                                data-color="light-blue2"></button>
-                            <button
-                                type="button"
-                                class="changeLogoHeaderColor"
-                                data-color="green2"></button>
-                            <button
-                                type="button"
-                                class="changeLogoHeaderColor"
-                                data-color="orange2"></button>
-                            <button
-                                type="button"
-                                class="changeLogoHeaderColor"
-                                data-color="red2"></button>
-                        </div>
-                    </div>
-                    <div class="switch-block">
-                        <h4>Navbar Header</h4>
-                        <div class="btnSwitch">
-                            <button
-                                type="button"
-                                class="changeTopBarColor"
-                                data-color="dark"></button>
-                            <button
-                                type="button"
-                                class="changeTopBarColor"
-                                data-color="blue"></button>
-                            <button
-                                type="button"
-                                class="changeTopBarColor"
-                                data-color="purple"></button>
-                            <button
-                                type="button"
-                                class="changeTopBarColor"
-                                data-color="light-blue"></button>
-                            <button
-                                type="button"
-                                class="changeTopBarColor"
-                                data-color="green"></button>
-                            <button
-                                type="button"
-                                class="changeTopBarColor"
-                                data-color="orange"></button>
-                            <button
-                                type="button"
-                                class="changeTopBarColor"
-                                data-color="red"></button>
-                            <button
-                                type="button"
-                                class="changeTopBarColor"
-                                data-color="white"></button>
-                            <br />
-                            <button
-                                type="button"
-                                class="changeTopBarColor"
-                                data-color="dark2"></button>
-                            <button
-                                type="button"
-                                class="selected changeTopBarColor"
-                                data-color="blue2"></button>
-                            <button
-                                type="button"
-                                class="changeTopBarColor"
-                                data-color="purple2"></button>
-                            <button
-                                type="button"
-                                class="changeTopBarColor"
-                                data-color="light-blue2"></button>
-                            <button
-                                type="button"
-                                class="changeTopBarColor"
-                                data-color="green2"></button>
-                            <button
-                                type="button"
-                                class="changeTopBarColor"
-                                data-color="orange2"></button>
-                            <button
-                                type="button"
-                                class="changeTopBarColor"
-                                data-color="red2"></button>
-                        </div>
-                    </div>
-                    <div class="switch-block">
-                        <h4>Sidebar</h4>
-                        <div class="btnSwitch">
-                            <button
-                                type="button"
-                                class="selected changeSideBarColor"
-                                data-color="white"></button>
-                            <button
-                                type="button"
-                                class="changeSideBarColor"
-                                data-color="dark"></button>
-                            <button
-                                type="button"
-                                class="changeSideBarColor"
-                                data-color="dark2"></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="custom-toggle">
-                <i class="icon-settings"></i>
             </div>
         </div>
-        <!-- End Custom template -->
+
+
+        <footer class="footer">
+            <div class="container-fluid d-flex justify-content-between">
+                <div class="copyright">
+                    Copyright @ 2024
+                    <a href="#">MI Darul Ulum</a>. All rights reserved
+                </div>
+
+                <div>Version 1.0</div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Custom template | don't include it in your project! -->
+    <div class="custom-template">
+        <div class="title">Settings</div>
+        <div class="custom-content">
+            <div class="switcher">
+                <div class="switch-block">
+                    <h4>Logo Header</h4>
+                    <div class="btnSwitch">
+                        <button
+                            type="button"
+                            class="selected changeLogoHeaderColor"
+                            data-color="dark"></button>
+                        <button
+                            type="button"
+                            class="selected changeLogoHeaderColor"
+                            data-color="blue"></button>
+                        <button
+                            type="button"
+                            class="changeLogoHeaderColor"
+                            data-color="purple"></button>
+                        <button
+                            type="button"
+                            class="changeLogoHeaderColor"
+                            data-color="light-blue"></button>
+                        <button
+                            type="button"
+                            class="changeLogoHeaderColor"
+                            data-color="green"></button>
+                        <button
+                            type="button"
+                            class="changeLogoHeaderColor"
+                            data-color="orange"></button>
+                        <button
+                            type="button"
+                            class="changeLogoHeaderColor"
+                            data-color="red"></button>
+                        <button
+                            type="button"
+                            class="changeLogoHeaderColor"
+                            data-color="white"></button>
+                        <br />
+                        <button
+                            type="button"
+                            class="changeLogoHeaderColor"
+                            data-color="dark2"></button>
+                        <button
+                            type="button"
+                            class="changeLogoHeaderColor"
+                            data-color="blue2"></button>
+                        <button
+                            type="button"
+                            class="changeLogoHeaderColor"
+                            data-color="purple2"></button>
+                        <button
+                            type="button"
+                            class="changeLogoHeaderColor"
+                            data-color="light-blue2"></button>
+                        <button
+                            type="button"
+                            class="changeLogoHeaderColor"
+                            data-color="green2"></button>
+                        <button
+                            type="button"
+                            class="changeLogoHeaderColor"
+                            data-color="orange2"></button>
+                        <button
+                            type="button"
+                            class="changeLogoHeaderColor"
+                            data-color="red2"></button>
+                    </div>
+                </div>
+                <div class="switch-block">
+                    <h4>Navbar Header</h4>
+                    <div class="btnSwitch">
+                        <button
+                            type="button"
+                            class="changeTopBarColor"
+                            data-color="dark"></button>
+                        <button
+                            type="button"
+                            class="changeTopBarColor"
+                            data-color="blue"></button>
+                        <button
+                            type="button"
+                            class="changeTopBarColor"
+                            data-color="purple"></button>
+                        <button
+                            type="button"
+                            class="changeTopBarColor"
+                            data-color="light-blue"></button>
+                        <button
+                            type="button"
+                            class="changeTopBarColor"
+                            data-color="green"></button>
+                        <button
+                            type="button"
+                            class="changeTopBarColor"
+                            data-color="orange"></button>
+                        <button
+                            type="button"
+                            class="changeTopBarColor"
+                            data-color="red"></button>
+                        <button
+                            type="button"
+                            class="changeTopBarColor"
+                            data-color="white"></button>
+                        <br />
+                        <button
+                            type="button"
+                            class="changeTopBarColor"
+                            data-color="dark2"></button>
+                        <button
+                            type="button"
+                            class="selected changeTopBarColor"
+                            data-color="blue2"></button>
+                        <button
+                            type="button"
+                            class="changeTopBarColor"
+                            data-color="purple2"></button>
+                        <button
+                            type="button"
+                            class="changeTopBarColor"
+                            data-color="light-blue2"></button>
+                        <button
+                            type="button"
+                            class="changeTopBarColor"
+                            data-color="green2"></button>
+                        <button
+                            type="button"
+                            class="changeTopBarColor"
+                            data-color="orange2"></button>
+                        <button
+                            type="button"
+                            class="changeTopBarColor"
+                            data-color="red2"></button>
+                    </div>
+                </div>
+                <div class="switch-block">
+                    <h4>Sidebar</h4>
+                    <div class="btnSwitch">
+                        <button
+                            type="button"
+                            class="selected changeSideBarColor"
+                            data-color="white"></button>
+                        <button
+                            type="button"
+                            class="changeSideBarColor"
+                            data-color="dark"></button>
+                        <button
+                            type="button"
+                            class="changeSideBarColor"
+                            data-color="dark2"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="custom-toggle">
+            <i class="icon-settings"></i>
+        </div>
+    </div>
+    <!-- End Custom template -->
     </div>
     <!--   Core JS Files   -->
     <script src="../../../assets/js/core/jquery-3.7.1.min.js"></script>
