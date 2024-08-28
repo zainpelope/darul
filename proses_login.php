@@ -22,7 +22,7 @@ if (mysqli_num_rows($result) == 1) {
     if ($row['id_role'] == 1) {
         header("Location: index.php");
     } elseif ($row['id_role'] == 2) {
-        header("Location: kepsek/menu.php");
+        header("Location: kepsek.php");
     }
 } else {
 

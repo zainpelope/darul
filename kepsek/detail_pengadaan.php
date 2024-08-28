@@ -47,7 +47,7 @@ $row = $result->fetch_assoc();
                 <td><?php echo htmlspecialchars($row['status']); ?></td>
             </tr>
         </table>
-        <a href="../../index.php?page=pengadaan_aset" class="btn btn-secondary">Kembali</a>
+        <a href=".../kepsek.php" class="btn btn-secondary">Kembali</a>
     </div>
 </body>
 
