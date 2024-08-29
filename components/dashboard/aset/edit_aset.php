@@ -1,19 +1,13 @@
 <?php
+include 'phpqrcode/qrlib.php';
 include '../../../koneksi.php';
 
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
 
-    $query = "SELECT * FROM aset WHERE id_aset='$id'";
-    $result = $conn->query($query);
+$id_aset = $_GET['id'];
+$query = "SELECT * FROM aset WHERE id_aset = '$id_aset'";
+$result = $conn->query($query);
+$aset = $result->fetch_assoc();
 
-    if ($result->num_rows > 0) {
-        $aset = $result->fetch_assoc();
-    } else {
-        echo "Aset tidak ditemukan!";
-        exit;
-    }
-}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama_aset = $_POST['nama_aset'];
@@ -24,22 +18,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $status = $_POST['status'];
     $id_lokasi = $_POST['id_lokasi'];
     $id_kategori = $_POST['id_kategori'];
-    $id_penerimaan = $_POST['id_penerimaan'];
+    $id_penerimaan = !empty($_POST['id_penerimaan']) ? $_POST['id_penerimaan'] : null;
+    $generate_qr = isset($_POST['generate_qr']);
+    $kode_qr = $aset['kode_qr'];
 
-    $sql = "UPDATE aset SET nama_aset='$nama_aset', deskripsi='$deskripsi', nilai_awal='$nilai_awal', 
-            nilai_sekarang='$nilai_sekarang', nomor_seri='$nomor_seri', status='$status', 
-            id_lokasi='$id_lokasi', id_kategori='$id_kategori', id_penerimaan='$id_penerimaan' WHERE id_aset='$id'";
+
+    if ($generate_qr) {
+        $kode_qr = 'QR-' . uniqid();
+        $qrCodeDir = __DIR__ . '/images/qr_codes/';
+        $qrCodeFile = $qrCodeDir . $kode_qr . '.png';
+
+        if (!file_exists($qrCodeDir)) {
+            mkdir($qrCodeDir, 0755, true);
+        }
+
+        QRcode::png($kode_qr, $qrCodeFile);
+    }
+
+
+    $sql = "UPDATE aset SET 
+                nama_aset = '$nama_aset', 
+                deskripsi = '$deskripsi', 
+                nilai_awal = '$nilai_awal', 
+                nilai_sekarang = '$nilai_sekarang', 
+                nomor_seri = '$nomor_seri', 
+                status = '$status', 
+                id_lokasi = '$id_lokasi', 
+                id_kategori = '$id_kategori', 
+                id_penerimaan = " . ($id_penerimaan ? "'$id_penerimaan'" : "NULL") . ", 
+                kode_qr = '$kode_qr' 
+            WHERE id_aset = '$id_aset'";
 
     if ($conn->query($sql) === TRUE) {
         header("Location: ../../../index.php");
         exit();
     } else {
-        echo "Error updating record: " . $conn->error;
+        echo '<div class="alert alert-danger">Error: ' . $sql . '<br>' . $conn->error . '</div>';
     }
 
     $conn->close();
 }
 ?>
+
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -329,46 +352,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="container">
                 <div class="page-inner">
                     <h2>Edit Aset</h2>
-                    <form action="edit_aset.php?id=<?php echo $aset['id_aset']; ?>" method="post">
+                    <form action="edit_aset.php?id=<?php echo $id_aset; ?>" method="post">
                         <div class="mb-3">
                             <label for="nama_aset" class="form-label">Nama Aset</label>
-                            <input type="text" class="form-control" id="nama_aset" name="nama_aset" value="<?php echo htmlspecialchars($aset['nama_aset']); ?>" required>
+                            <input type="text" class="form-control" id="nama_aset" name="nama_aset" value="<?php echo $aset['nama_aset']; ?>" required>
                         </div>
                         <div class="mb-3">
                             <label for="deskripsi" class="form-label">Deskripsi</label>
-                            <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" required><?php echo htmlspecialchars($aset['deskripsi']); ?></textarea>
+                            <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" required><?php echo $aset['deskripsi']; ?></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="nilai_awal" class="form-label">Nilai Awal</label>
-                            <input type="number" class="form-control" id="nilai_awal" name="nilai_awal" step="0.01" value="<?php echo htmlspecialchars($aset['nilai_awal']); ?>" required>
+                            <input type="number" class="form-control" id="nilai_awal" name="nilai_awal" step="0.01" value="<?php echo $aset['nilai_awal']; ?>" required>
                         </div>
                         <div class="mb-3">
                             <label for="nilai_sekarang" class="form-label">Nilai Sekarang</label>
-                            <input type="number" class="form-control" id="nilai_sekarang" name="nilai_sekarang" step="0.01" value="<?php echo htmlspecialchars($aset['nilai_sekarang']); ?>" required>
+                            <input type="number" class="form-control" id="nilai_sekarang" name="nilai_sekarang" step="0.01" value="<?php echo $aset['nilai_sekarang']; ?>" required>
                         </div>
                         <div class="mb-3">
                             <label for="nomor_seri" class="form-label">Nomor Seri</label>
-                            <input type="text" class="form-control" id="nomor_seri" name="nomor_seri" value="<?php echo htmlspecialchars($aset['nomor_seri']); ?>" required>
+                            <input type="text" class="form-control" id="nomor_seri" name="nomor_seri" value="<?php echo $aset['nomor_seri']; ?>" required>
                         </div>
                         <div class="mb-3">
                             <label for="status" class="form-label">Status</label>
                             <select class="form-control" id="status" name="status" required>
-                                <option value="Aktif">Aktif</option>
-                                <option value="Tidak Aktif">Tidak Aktif</option>
+                                <option value="Aktif" <?php echo ($aset['status'] == 'Aktif') ? 'selected' : ''; ?>>Aktif</option>
+                                <option value="Tidak Aktif" <?php echo ($aset['status'] == 'Tidak Aktif') ? 'selected' : ''; ?>>Tidak Aktif</option>
                             </select>
                         </div>
-
                         <div class="mb-3">
                             <label for="id_lokasi" class="form-label">Lokasi</label>
                             <select class="form-control" id="id_lokasi" name="id_lokasi" required>
+                                <option value="">Silakan pilih lokasi</option>
                                 <?php
                                 $lokasiQuery = "SELECT id_lokasi, nama_lokasi FROM lokasi";
                                 $lokasiResult = $conn->query($lokasiQuery);
-                                if ($lokasiResult->num_rows > 0) {
-                                    while ($row = $lokasiResult->fetch_assoc()) {
-                                        $selected = ($row['id_lokasi'] == $aset['id_lokasi']) ? 'selected' : '';
-                                        echo '<option value="' . $row['id_lokasi'] . '" ' . $selected . '>' . htmlspecialchars($row['nama_lokasi']) . '</option>';
-                                    }
+                                while ($row = $lokasiResult->fetch_assoc()) {
+                                    $selected = ($aset['id_lokasi'] == $row['id_lokasi']) ? 'selected' : '';
+                                    echo '<option value="' . $row['id_lokasi'] . '" ' . $selected . '>' . $row['nama_lokasi'] . '</option>';
                                 }
                                 ?>
                             </select>
@@ -376,35 +397,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="mb-3">
                             <label for="id_kategori" class="form-label">Kategori</label>
                             <select class="form-control" id="id_kategori" name="id_kategori" required>
+                                <option value="">Silakan pilih kategori aset</option>
                                 <?php
                                 $kategoriQuery = "SELECT id_kategori, nama_kategori FROM kategori_aset";
                                 $kategoriResult = $conn->query($kategoriQuery);
-                                if ($kategoriResult->num_rows > 0) {
-                                    while ($row = $kategoriResult->fetch_assoc()) {
-                                        $selected = ($row['id_kategori'] == $aset['id_kategori']) ? 'selected' : '';
-                                        echo '<option value="' . $row['id_kategori'] . '" ' . $selected . '>' . htmlspecialchars($row['nama_kategori']) . '</option>';
-                                    }
+                                while ($row = $kategoriResult->fetch_assoc()) {
+                                    $selected = ($aset['id_kategori'] == $row['id_kategori']) ? 'selected' : '';
+                                    echo '<option value="' . $row['id_kategori'] . '" ' . $selected . '>' . $row['nama_kategori'] . '</option>';
                                 }
                                 ?>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="id_penerimaan" class="form-label">Penerimaan</label>
-                            <select class="form-control" id="id_penerimaan" name="id_penerimaan" required>
+                            <select class="form-control" id="id_penerimaan" name="id_penerimaan">
+                                <option value="">Silakan pilih penerimaan aset</option>
                                 <?php
-                                $penerimaanQuery = "SELECT id_penerimaan, CONCAT('Penerimaan ', id_penerimaan, ' - ', DATE_FORMAT(tanggal_penerimaan, '%d-%m-%Y')) AS penerimaan_details FROM penerimaan_aset";
+                                $penerimaanQuery = "SELECT id_penerimaan, DATE_FORMAT(tanggal_penerimaan, '%d-%m-%Y') AS tanggal_penerimaan FROM penerimaan_aset";
                                 $penerimaanResult = $conn->query($penerimaanQuery);
-                                if ($penerimaanResult->num_rows > 0) {
-                                    while ($row = $penerimaanResult->fetch_assoc()) {
-                                        $selected = ($row['id_penerimaan'] == $aset['id_penerimaan']) ? 'selected' : '';
-                                        echo '<option value="' . $row['id_penerimaan'] . '" ' . $selected . '>' . htmlspecialchars($row['penerimaan_details']) . '</option>';
-                                    }
+                                while ($row = $penerimaanResult->fetch_assoc()) {
+                                    $selected = ($aset['id_penerimaan'] == $row['id_penerimaan']) ? 'selected' : '';
+                                    echo '<option value="' . $row['id_penerimaan'] . '" ' . $selected . '>' . $row['tanggal_penerimaan'] . '</option>';
                                 }
                                 ?>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary mt-3 w-100">Simpan</button>
-                        <a href="../../../index.php" class="btn btn-danger mt-2 w-100">Batal</a>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="generate_qr" name="generate_qr">
+                                <label class="form-check-label" for="generate_qr">
+                                    Generate QR Code
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 mb-3">
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <a href="../../../index.php" class="btn btn-danger">Batal</a>
+                        </div>
                     </form>
                 </div>
 
