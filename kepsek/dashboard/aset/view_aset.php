@@ -1,5 +1,5 @@
 <?php
-include '../koneksi.php';
+include '../../../koneksi.php';
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
@@ -32,11 +32,11 @@ if (isset($_GET['id'])) {
         name="viewport" />
     <link
         rel="icon"
-        href="../assets/img/kaiadmin/favicon.ico"
+        href="../../../assets/img/kaiadmin/favicon.ico"
         type="image/x-icon" />
 
     <!-- Fonts and icons -->
-    <script src="../assets/js/plugin/webfont/webfont.min.js"></script>
+    <script src="../../../assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
         WebFont.load({
             google: {
@@ -49,7 +49,7 @@ if (isset($_GET['id'])) {
                     "Font Awesome 5 Brands",
                     "simple-line-icons",
                 ],
-                urls: ["../assets/css/fonts.min.css"],
+                urls: ["../../../assets/css/fonts.min.css"],
             },
             active: function() {
                 sessionStorage.fonts = true;
@@ -58,12 +58,12 @@ if (isset($_GET['id'])) {
     </script>
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="../assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="../../../assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../../assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="../../../assets/css/kaiadmin.min.css" />
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link rel="stylesheet" href="../assets/css/demo.css" />
+    <link rel="stylesheet" href="../../../assets/css/demo.css" />
 </head>
 
 <body>
@@ -93,7 +93,7 @@ if (isset($_GET['id'])) {
                 <div class="sidebar-content">
                     <ul class="nav nav-secondary">
                         <li class="nav-item">
-                            <a href="../kepsek.php" class="collapsed" aria-expanded="false">
+                            <a href="../../../kepsek.php" class="collapsed" aria-expanded="false">
                                 <i class="fas fa-home"></i>
                                 <p>Dashboard</p>
                             </a>
@@ -174,9 +174,9 @@ if (isset($_GET['id'])) {
                 <div class="main-header-logo">
                     <!-- Logo Header -->
                     <div class="logo-header" data-background-color="dark">
-                        <a href="../kepsek.php" class="logo">
+                        <a href="../../../kepsek.php" class="logo">
                             <img
-                                src="../assets/img/kaiadmin/logo_light.svg"
+                                src="../../../assets/img/kaiadmin/logo_light.svg"
                                 alt="navbar brand"
                                 class="navbar-brand"
                                 height="20" />
@@ -248,7 +248,7 @@ if (isset($_GET['id'])) {
                                     aria-expanded="false">
                                     <div class="avatar-sm">
                                         <img
-                                            src="../assets/img/profile.jpg"
+                                            src="../../../assets/img/profile.jpg"
                                             alt="..."
                                             class="avatar-img rounded-circle" />
                                     </div>
@@ -261,7 +261,7 @@ if (isset($_GET['id'])) {
                                     <div class="dropdown-user-scroll scrollbar-outer">
 
 
-                                        <a class="dropdown-item" href="../login.php">Logout</a>
+                                        <a class="dropdown-item" href="../../../login.php">Logout</a>
 
                                     </div>
                                 </ul>
@@ -322,7 +322,7 @@ if (isset($_GET['id'])) {
                         </tr>
 
                     </table>
-                    <a href="../kepsek.php" class="btn btn-danger mt-3 w-100">Kembali</a>
+                    <a href="../../../kepsek.php" class="btn btn-danger mt-3 w-100">Kembali</a>
                 </div>
 
 
@@ -504,42 +504,42 @@ if (isset($_GET['id'])) {
     <!-- End Custom template -->
     </div>
     <!--   Core JS Files   -->
-    <script src="../assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="../assets/js/core/popper.min.js"></script>
-    <script src="../assets/js/core/bootstrap.min.js"></script>
+    <script src="../../../assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="../../../assets/js/core/popper.min.js"></script>
+    <script src="../../../assets/js/core/bootstrap.min.js"></script>
 
     <!-- jQuery Scrollbar -->
-    <script src="../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="../../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
     <!-- Moment JS -->
-    <script src="../assets/js/plugin/moment/moment.min.js"></script>
+    <script src="../../../assets/js/plugin/moment/moment.min.js"></script>
 
     <!-- Chart JS -->
-    <script src="../assets/js/plugin/chart.js/chart.min.js"></script>
+    <script src="../../../assets/js/plugin/chart.js/chart.min.js"></script>
 
     <!-- jQuery Sparkline -->
-    <script src="../assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+    <script src="../../../assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
 
     <!-- Chart Circle -->
-    <script src="../assets/js/plugin/chart-circle/circles.min.js"></script>
+    <script src="../../../assets/js/plugin/chart-circle/circles.min.js"></script>
 
     <!-- Datatables -->
-    <script src="../assets/js/plugin/datatables/datatables.min.js"></script>
+    <script src="../../../assets/js/plugin/datatables/datatables.min.js"></script>
 
     <!-- Bootstrap Notify -->
-    <script src="../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+    <script src="../../../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
 
     <!-- jQuery Vector Maps -->
-    <script src="../assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
-    <script src="../assets/js/plugin/jsvectormap/world.js"></script>
+    <script src="../../../assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+    <script src="../../../assets/js/plugin/jsvectormap/world.js"></script>
 
     <!-- Sweet Alert -->
-    <script src="../assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+    <script src="../../../assets/js/plugin/sweetalert/sweetalert.min.js"></script>
 
     <!-- Kaiadmin JS -->
-    <script src="../assets/js/kaiadmin.min.js"></script>
+    <script src="../../../assets/js/kaiadmin.min.js"></script>
 
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
-    <script src="../assets/js/setting-demo2.js"></script>
+    <script src="../../../assets/js/setting-demo2.js"></script>
 </body>
 
 </html>

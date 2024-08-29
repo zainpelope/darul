@@ -403,7 +403,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="mb-3">
                                 <label for="id_penerimaan" class="form-label">Penerimaan</label>
                                 <select class="form-control" id="id_penerimaan" name="id_penerimaan">
-                                    <option value="">Silakan pilih penerimaan aset</option>
+                                    <option value="">Tidak ada</option>
                                     <?php
                                     $penerimaanQuery = "SELECT id_penerimaan, DATE_FORMAT(tanggal_penerimaan, '%d-%m-%Y') AS tanggal_penerimaan FROM penerimaan_aset";
                                     $penerimaanResult = $conn->query($penerimaanQuery);
