@@ -247,7 +247,6 @@ include 'koneksi.php';
 
                     <div class="container">
                         <h2>Data Aset</h2>
-
                         <?php
 
                         $sql = "SELECT a.id_aset, a.nama_aset, k.nama_kategori, l.nama_lokasi, a.status
@@ -273,8 +272,9 @@ include 'koneksi.php';
                                 echo '<td>' . $row['nama_lokasi'] . '</td>';
                                 echo '<td><span style="background-color: ' . $backgroundColor . '; color: ' . $textColor . '; padding: 2px 6px; border-radius: 4px; font-style: italic;">' . htmlspecialchars($row['status']) . '</span></td>';
                                 echo '<td>
-          <a href="kepsek/dashboard/aset/view_aset.php?id=' . $row['id_aset'] . '" class="btn btn-info">View</a>
-      
+          <a href="components/dashboard/aset/view_kepsek.php?id=' . $row['id_aset'] . '" class="btn btn-info">View</a>
+         
+         
         </td>';
                                 echo '</tr>';
                             }
@@ -286,6 +286,8 @@ include 'koneksi.php';
 
                         $conn->close();
                         ?>
+
+
                     </div>
                 </div>
             </div>
