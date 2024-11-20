@@ -201,6 +201,11 @@ include 'koneksi.php';
                       <span class="sub-item">Pengguna</span>
                     </a>
                   </li>
+                  <li>
+                    <a href="components/kelola_pengguna.php">
+                      <span class="sub-item">Kelola Pengguna</span>
+                    </a>
+                  </li>
                 </ul>
               </div>
             </li>
