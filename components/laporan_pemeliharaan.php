@@ -6,10 +6,9 @@ $asetQuery = "SELECT DISTINCT a.id_aset, a.nama_aset
               LEFT JOIN aset a ON pa.id_aset = a.id_aset";
 $asetResult = $conn->query($asetQuery);
 
-
 $selectedAset = isset($_POST['aset']) ? $_POST['aset'] : '';
 
-$sql = "SELECT pa.id_perbaikan, pa.tanggal_perbaikan, a.nama_aset, pa.deksripsi_kegiatan, pa.biaya, pa.status
+$sql = "SELECT pa.id_perbaikan, pa.tanggal_perbaikan, a.nama_aset, pa.deksripsi_kegiatan, pa.biaya, pa.status, pa.bukti_perbaikan
         FROM perbaikan_aset pa
         LEFT JOIN aset a ON pa.id_aset = a.id_aset
         WHERE 1=1";
@@ -310,8 +309,7 @@ $result = $conn->query($sql);
 
 
                     <h2>Laporan Pemeliharaan Aset</h2>
-                    <form action="../components/laporan_pemeliharaan.php" method="post">
-
+                    <form action="index.php?page=laporan_pemeliharaan" method="post">
                         <div class="mb-3">
                             <label for="aset" class="form-label">Filter Aset</label>
                             <select class="form-control" id="aset" name="aset">
@@ -334,7 +332,7 @@ $result = $conn->query($sql);
 
                     if ($result->num_rows > 0) {
                         echo '<table class="table table-striped mt-3">';
-                        echo '<thead><tr><th>No</th><th>Tanggal Pemeliharaan</th><th>Nama Aset</th><th>Deskripsi Pemeliharaan</th><th>Biaya</th><th>Status</th></tr></thead>';
+                        echo '<thead><tr><th>No</th><th>Tanggal Pemeliharaan</th><th>Nama Aset</th><th>Deskripsi Pemeliharaan</th><th>Biaya</th><th>Status</th><th>Bukti</th></tr></thead>';
                         echo '<tbody>';
                         while ($row = $result->fetch_assoc()) {
                             echo '<tr>';
@@ -344,6 +342,14 @@ $result = $conn->query($sql);
                             echo '<td>' . $row['deksripsi_kegiatan'] . '</td>';
                             echo '<td>' . number_format($row['biaya'], 2, ',', '.') . '</td>';
                             echo '<td>' . $row['status'] . '</td>';
+
+                            // Add a link to download the bukti (proof) file
+                            if (!empty($row['bukti_perbaikan'])) {
+                                echo '<td><a href="../uploads/' . $row['bukti_perbaikan'] . '" class="btn btn-info" target="_blank">Lihat Bukti</a></td>';
+                            } else {
+                                echo '<td>No Bukti</td>';
+                            }
+
                             echo '</tr>';
                         }
                         echo '</tbody></table>';
@@ -353,7 +359,6 @@ $result = $conn->query($sql);
 
                     $conn->close();
                     ?>
-
                     <div class="d-grid gap-2 mt-3">
                         <form action="laporan/pemeliharaan/generate_pdf.php" method="get">
                             <input type="hidden" name="aset" value="<?php echo htmlspecialchars($selectedAset); ?>">

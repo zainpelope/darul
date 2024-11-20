@@ -234,6 +234,11 @@ $result_aset = $conn->query($sql_aset);
                                             <span class="sub-item">Pengguna</span>
                                         </a>
                                     </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="sub-item">Kelola Pengguna</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
@@ -346,7 +351,8 @@ $result_aset = $conn->query($sql_aset);
                         </div>
                         <div class="mb-3">
                             <label for="tanggal_penyusutan" class="form-label">Tanggal Penyusutan</label>
-                            <input type="date" id="tanggal_penyusutan" name="tanggal_penyusutan" class="form-control" required>
+                            <input type="date" class="form-control" id="tanggal_penyusutan" name="tanggal_penyusutan"
+                                value="<?php echo date('Y-m-d'); ?>" required>
                         </div>
                         <div class="mb-3">
                             <label for="nilai_penyusutan" class="form-label">Nilai Penyusutan</label>

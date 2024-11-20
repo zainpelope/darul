@@ -231,6 +231,11 @@ $conn->close();
                                             <span class="sub-item">Pengguna</span>
                                         </a>
                                     </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="sub-item">Kelola Pengguna</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
@@ -353,7 +358,8 @@ $conn->close();
 
                         <div class="mb-3">
                             <label for="tanggal_penghapusan" class="form-label">Tanggal Penghapusan</label>
-                            <input type="date" class="form-control" id="tanggal_penghapusan" name="tanggal_penghapusan" required>
+                            <input type="date" class="form-control" id="tanggal_penghapusan" name="tanggal_penghapusan"
+                                value="<?php echo date('Y-m-d'); ?>" required>
                         </div>
                         <div class="mb-3">
                             <label for="alasan_penghapusan" class="form-label">Alasan Penghapusan</label>

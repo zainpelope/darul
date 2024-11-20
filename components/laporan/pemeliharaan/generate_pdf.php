@@ -20,7 +20,7 @@ if ($namaAsetResult->num_rows > 0) {
 }
 
 
-$sql = "SELECT pa.id_perbaikan, pa.tanggal_perbaikan, a.nama_aset, pa.deksripsi_kegiatan, pa.biaya, pa.status
+$sql = "SELECT pa.id_perbaikan, pa.tanggal_perbaikan, a.nama_aset, pa.deksripsi_kegiatan, pa.biaya, pa.status, pa.bukti_perbaikan
         FROM perbaikan_aset pa
         LEFT JOIN aset a ON pa.id_aset = a.id_aset
         WHERE 1=1";
@@ -75,6 +75,7 @@ $html = '
             <th>Tanggal Pemeliharaan</th>
             <th>Nama Aset</th>
             <th>Deskripsi Pemeliharaan</th>
+            <th>Bukti Perbaikan</th>
             <th>Biaya</th>
             <th>Status</th>
         </tr>
@@ -87,18 +88,37 @@ $totalBiaya = 0;
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $totalBiaya += $row['biaya'];
+
+        // Check if bukti_perbaikan exists and prepare link to the file (image, PDF, etc.)
+        // Check if bukti_perbaikan exists and is an image file
+        if ($row['bukti_perbaikan']) {
+            $filePath = '../../../uploads/' . $row['bukti_perbaikan'];
+            $fileExtension = pathinfo($filePath, PATHINFO_EXTENSION);
+            if (in_array(strtolower($fileExtension), ['jpg', 'jpeg', 'png', 'gif', 'bmp'])) {
+                // Display image if the file is an image
+                $buktiPerbaikan = '<img src="' . $filePath . '" alt="Bukti Perbaikan" style="width: 100px; height: auto;">';
+            } else {
+                // Display link if the file is not an image
+                $buktiPerbaikan = '<a href="' . $filePath . '" target="_blank">Lihat Bukti</a>';
+            }
+        } else {
+            $buktiPerbaikan = 'Tidak ada bukti';
+        }
+
+
         $html .= '<tr>
                     <td style="text-align: center;">' . $no++ . '</td>
                     <td>' . date('d-m-Y', strtotime($row['tanggal_perbaikan'])) . '</td>
                     <td>' . $row['nama_aset'] . '</td>
                     <td>' . $row['deksripsi_kegiatan'] . '</td>
+                    <td>' . $buktiPerbaikan . '</td>
                     <td style="text-align: right;">' . number_format($row['biaya'], 2, ',', '.') . '</td>
                     <td>' . $row['status'] . '</td>
                   </tr>';
     }
 } else {
     $html .= '<tr>
-                <td colspan="6" style="text-align: center;">Tidak ada data perbaikan aset untuk aset yang dipilih.</td>
+                <td colspan="7" style="text-align: center;">Tidak ada data perbaikan aset untuk aset yang dipilih.</td>
               </tr>';
 }
 
