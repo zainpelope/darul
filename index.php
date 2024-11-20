@@ -307,27 +307,28 @@ include 'koneksi.php';
         <?php
         // Query untuk mengambil data aset beserta gambar, deskripsi, nilai awal, dan nilai sekarang
         $sql = "SELECT a.id_aset, a.nama_aset, a.deskripsi, a.nilai_awal, a.nilai_sekarang, k.nama_kategori, l.nama_lokasi, a.status, a.gambar
-                FROM aset a
-                LEFT JOIN kategori_aset k ON a.id_kategori = k.id_kategori
-                LEFT JOIN lokasi l ON a.id_lokasi = l.id_lokasi";
+            FROM aset a
+            LEFT JOIN kategori_aset k ON a.id_kategori = k.id_kategori
+            LEFT JOIN lokasi l ON a.id_lokasi = l.id_lokasi";
 
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
+          echo '<div class="table-responsive">'; // Tambahkan div dengan class table-responsive
           echo '<table class="table table-striped">';
           echo '<thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Nama Aset</th>
-                        <th>Gambar</th>
-                        <th>Deskripsi</th>
-                        <th>Nilai Awal</th>
-                        <th>Nilai Sekarang</th>
-                        <th>Kategori</th>
-                        <th>Lokasi</th>
-                        <th>Status</th>
-                        <th>Aksi</th>
-                    </tr>
-                  </thead>';
+                <tr>
+                    <th>No</th>
+                    <th>Nama Aset</th>
+                    <th>Gambar</th>
+                    <th>Deskripsi</th>
+                    <th>Nilai Awal</th>
+                    <th>Nilai Sekarang</th>
+                    <th>Kategori</th>
+                    <th>Lokasi</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                </tr>
+              </thead>';
           echo '<tbody>';
 
           $no = 1;
@@ -347,13 +348,14 @@ include 'koneksi.php';
             echo '<td>' . htmlspecialchars($row['nama_lokasi']) . '</td>';
             echo '<td><span style="background-color: ' . $backgroundColor . '; color: ' . $textColor . '; padding: 2px 6px; border-radius: 4px; font-style: italic;">' . htmlspecialchars($row['status']) . '</span></td>';
             echo '<td>
-                        <a href="components/dashboard/aset/view_aset.php?id=' . $row['id_aset'] . '" class="btn btn-info">View</a>
-                        <a href="components/dashboard/aset/edit_aset.php?id=' . $row['id_aset'] . '" class="btn btn-primary">Edit</a>
-                    </td>';
+                    <a href="components/dashboard/aset/view_aset.php?id=' . $row['id_aset'] . '" class="btn btn-info">View</a>
+                    <a href="components/dashboard/aset/edit_aset.php?id=' . $row['id_aset'] . '" class="btn btn-primary">Edit</a>
+                  </td>';
             echo '</tr>';
           }
 
           echo '</tbody></table>';
+          echo '</div>'; // Tutup div table-responsive
         } else {
           echo '<div class="alert alert-warning">Tidak ada data.</div>';
         }
@@ -361,6 +363,7 @@ include 'koneksi.php';
         $conn->close();
         ?>
       </div>
+
 
       <footer class="footer">
         <div class="container-fluid d-flex justify-content-between">
