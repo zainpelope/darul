@@ -21,6 +21,7 @@ if (isset($_GET['id'])) {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -112,7 +113,7 @@ if (isset($_GET['id'])) {
                                         </a>
                                     </li>
                                     <li>
-                                    <a href="../../../components/pengadaan_aset/pengadaan/pengadaan_aset.php">
+                                        <a href="../../../components/pengadaan_aset/pengadaan/pengadaan_aset.php">
                                             <span class="sub-item">Pengadaan Aset</span>
                                         </a>
                                     </li>
@@ -121,25 +122,25 @@ if (isset($_GET['id'])) {
                         </li>
 
                         <li class="nav-item">
-                        <a href="../../../components/penerimaan_aset.php">
+                            <a href="../../../components/penerimaan_aset.php">
                                 <i class="fas fa-th-list"></i>
                                 <p>Penerimaan Aset</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                        <a href="../../../components/pemeliharaan_aset.php">
+                            <a href="../../../components/pemeliharaan_aset.php">
                                 <i class="fas fa-th-list"></i>
                                 <p>Pemeliharaan Aset</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                        <a href="../../../components/penyusutan_aset.php">
+                            <a href="../../../components/penyusutan_aset.php">
                                 <i class="fas fa-th-list"></i>
                                 <p>Penyusutan Aset</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                        <a href="../../../components/penghapusan_aset.php">
+                            <a href="../../../components/penghapusan_aset.php">
                                 <i class="fas fa-th-list"></i>
                                 <p>Penghapusan Aset</p>
                             </a>
@@ -153,32 +154,32 @@ if (isset($_GET['id'])) {
                             <div class="collapse" id="forms">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                    <a href="../../../components/laporan_aset.php">
+                                        <a href="../../../components/laporan_aset.php">
                                             <span class="sub-item">Laporan Aset</span>
                                         </a>
                                     </li>
                                     <li>
-                                    <a href="../../../components/laporan_pengdaan.php">
+                                        <a href="../../../components/laporan_pengdaan.php">
                                             <span class="sub-item">Laporan Pengadaan</span>
                                         </a>
                                     </li>
                                     <li>
-                                    <a href="../../../components/laporan_peneriman.php">
+                                        <a href="../../../components/laporan_peneriman.php">
                                             <span class="sub-item">Laporan Penerimaan</span>
                                         </a>
                                     </li>
                                     <li>
-                                    <a href="../../../components/laporan_pemelihraan.php">
+                                        <a href="../../../components/laporan_pemelihraan.php">
                                             <span class="sub-item">Laporan Pemelihraan</span>
                                         </a>
                                     </li>
                                     <li>
-                                    <a href="../../../components/laporan_penyusutan.php">
+                                        <a href="../../../components/laporan_penyusutan.php">
                                             <span class="sub-item">Laporan Penyusutan</span>
                                         </a>
                                     </li>
                                     <li>
-                                    <a href="../../../components/laporan_penghapusan.php">
+                                        <a href="../../../components/laporan_penghapusan.php">
                                             <span class="sub-item">Laporan Penghapusan</span>
                                         </a>
                                     </li>
@@ -195,18 +196,23 @@ if (isset($_GET['id'])) {
                             <div class="collapse" id="pengaturan">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                    <a href="../../../components/kategori.php">
+                                        <a href="../../../components/kategori.php">
                                             <span class="sub-item">Kategori Aset</span>
                                         </a>
                                     </li>
                                     <li>
-                                    <a href="../../../components/lokasi.php">
+                                        <a href="../../../components/lokasi.php">
                                             <span class="sub-item">Lokasi Aset</span>
                                         </a>
                                     </li>
                                     <li>
-                                    <a href="../../../components/profile.php">
+                                        <a href="../../../components/profile.php">
                                             <span class="sub-item">Pengguna</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="../../../components/kelola_pengguna.php">
+                                            <span class="sub-item">Kelola Pengguna</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -328,15 +334,26 @@ if (isset($_GET['id'])) {
 
                     <table class="table table-striped">
                         <tr>
+                            <th>Gambar Aset</th>
+                            <td>
+                                <?php if (!empty($aset['gambar'])): ?>
+                                    <img src="images/aset/<?php echo $aset['gambar']; ?>" alt="Gambar Aset" style="width: 200px; height: auto; border-radius: 4px;">
+                                <?php else: ?>
+                                    Tidak tersedia
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                        <tr>
                             <th>QR Code</th>
                             <td>
-                                <?php if ($aset['kode_qr']): ?>
+                                <?php if (!empty($aset['kode_qr'])): ?>
                                     <img src="images/qr_codes/<?php echo $aset['kode_qr']; ?>.png" alt="QR Code" style="width: 150px; height: 150px;">
                                 <?php else: ?>
                                     Tidak tersedia
                                 <?php endif; ?>
                             </td>
                         </tr>
+
                         <tr>
                             <th>Nama Aset</th>
                             <td><?php echo $aset['nama_aset']; ?></td>
@@ -369,7 +386,6 @@ if (isset($_GET['id'])) {
                             <th>Kategori</th>
                             <td><?php echo $aset['nama_kategori']; ?></td>
                         </tr>
-
                     </table>
                     <a href="../../../index.php" class="btn btn-danger mt-3 w-100">Kembali</a>
                 </div>

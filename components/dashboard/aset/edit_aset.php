@@ -8,7 +8,6 @@ $query = "SELECT * FROM aset WHERE id_aset = '$id_aset'";
 $result = $conn->query($query);
 $aset = $result->fetch_assoc();
 
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama_aset = $_POST['nama_aset'];
     $deskripsi = $_POST['deskripsi'];
@@ -21,6 +20,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_penerimaan = !empty($_POST['id_penerimaan']) ? $_POST['id_penerimaan'] : null;
     $generate_qr = isset($_POST['generate_qr']);
     $kode_qr = $aset['kode_qr'];
+    $gambar_lama = $aset['gambar'];
+
+
+    if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] === UPLOAD_ERR_OK) {
+        $uploadDir = __DIR__ . '/images/aset/';
+        $fileName = uniqid() . '-' . basename($_FILES['gambar']['name']);
+        $uploadFile = $uploadDir . $fileName;
+
+        if (!file_exists($uploadDir)) {
+            mkdir($uploadDir, 0755, true);
+        }
+
+        if (move_uploaded_file($_FILES['gambar']['tmp_name'], $uploadFile)) {
+            $gambar = $fileName;
+        } else {
+            echo '<div class="alert alert-danger">Gagal mengunggah gambar.</div>';
+        }
+    } else {
+
+        $gambar = $gambar_lama;
+    }
 
 
     if ($generate_qr) {
@@ -35,7 +55,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         QRcode::png($kode_qr, $qrCodeFile);
     }
 
-
     $sql = "UPDATE aset SET 
                 nama_aset = '$nama_aset', 
                 deskripsi = '$deskripsi', 
@@ -46,7 +65,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 id_lokasi = '$id_lokasi', 
                 id_kategori = '$id_kategori', 
                 id_penerimaan = " . ($id_penerimaan ? "'$id_penerimaan'" : "NULL") . ", 
-                kode_qr = '$kode_qr' 
+                kode_qr = '$kode_qr',
+                gambar = '$gambar' 
             WHERE id_aset = '$id_aset'";
 
     if ($conn->query($sql) === TRUE) {
@@ -59,8 +79,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $conn->close();
 }
 ?>
-
-
 
 
 
@@ -254,6 +272,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             <span class="sub-item">Pengguna</span>
                                         </a>
                                     </li>
+                                    <li>
+                                        <a href="../../../components/kelola_pengguna.php">
+                                            <span class="sub-item">Kelola Pengguna</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
@@ -352,7 +375,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="container">
                 <div class="page-inner">
                     <h2>Edit Aset</h2>
-                    <form action="edit_aset.php?id=<?php echo $id_aset; ?>" method="post">
+                    <form action="edit_aset.php?id=<?php echo $id_aset; ?>" method="post" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="nama_aset" class="form-label">Nama Aset</label>
                             <input type="text" class="form-control" id="nama_aset" name="nama_aset" value="<?php echo $aset['nama_aset']; ?>" required>
@@ -409,32 +432,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="id_penerimaan" class="form-label">Penerimaan</label>
-                            <select class="form-control" id="id_penerimaan" name="id_penerimaan">
-                                <option value="">Tidak ada</option>
-                                <?php
-                                $penerimaanQuery = "SELECT id_penerimaan, DATE_FORMAT(tanggal_penerimaan, '%d-%m-%Y') AS tanggal_penerimaan FROM penerimaan_aset";
-                                $penerimaanResult = $conn->query($penerimaanQuery);
-                                while ($row = $penerimaanResult->fetch_assoc()) {
-                                    $selected = ($aset['id_penerimaan'] == $row['id_penerimaan']) ? 'selected' : '';
-                                    echo '<option value="' . $row['id_penerimaan'] . '" ' . $selected . '>' . $row['tanggal_penerimaan'] . '</option>';
-                                }
-                                ?>
-                            </select>
+                            <label for="gambar" class="form-label">Gambar</label>
+                            <input type="file" class="form-control" id="gambar" name="gambar" accept="image/*">
+                            <img src="images/aset/<?php echo $aset['gambar']; ?>" alt="Gambar Aset" width="100" class="mt-3">
                         </div>
                         <div class="mb-3">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="generate_qr" name="generate_qr">
-                                <label class="form-check-label" for="generate_qr">
-                                    Generate QR Code
-                                </label>
-                            </div>
+                            <label for="generate_qr" class="form-label">Generate QR Code</label>
+                            <input type="checkbox" id="generate_qr" name="generate_qr" <?php echo ($aset['kode_qr']) ? 'checked' : ''; ?>>
                         </div>
-
-                        <div class="d-grid gap-2 mb-3">
-                            <button type="submit" class="btn btn-primary">Simpan</button>
-                            <a href="../../../index.php" class="btn btn-danger">Batal</a>
-                        </div>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <a href="../../../index.php" class="btn btn-secondary">Batal</a>
                     </form>
                 </div>
 

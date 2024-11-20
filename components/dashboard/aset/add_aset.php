@@ -3,19 +3,27 @@ include 'phpqrcode/qrlib.php';
 include '../../../koneksi.php';
 
 $kode_qr = '';
+$gambar = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama_aset = $_POST['nama_aset'];
     $deskripsi = $_POST['deskripsi'];
     $nilai_awal = $_POST['nilai_awal'];
     $nilai_sekarang = $_POST['nilai_sekarang'];
-    $nomor_seri = $_POST['nomor_seri'];
     $status = $_POST['status'];
     $id_lokasi = $_POST['id_lokasi'];
     $id_kategori = $_POST['id_kategori'];
     $id_penerimaan = !empty($_POST['id_penerimaan']) ? $_POST['id_penerimaan'] : null; // Handle empty selection
     $generate_qr = isset($_POST['generate_qr']);
 
+    // Generate nomor seri otomatis
+    $queryCount = "SELECT COUNT(*) AS total FROM aset";
+    $resultCount = $conn->query($queryCount);
+    $rowCount = $resultCount->fetch_assoc();
+    $total = $rowCount['total'] + 1; // Increment count for the new entry
+    $nomor_seri = str_pad($total, 5, '0', STR_PAD_LEFT); // Format as 5-digit number
+
+    // Generate QR code
     if ($generate_qr) {
         $kode_qr = 'QR-' . uniqid();
         $qrCodeDir = __DIR__ . '/images/qr_codes/';
@@ -28,10 +36,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         QRcode::png($kode_qr, $qrCodeFile);
     }
 
+    // Handle file upload for image
+    if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] === UPLOAD_ERR_OK) {
+        $uploadDir = __DIR__ . '/images/aset/';
+        $fileName = uniqid() . '-' . basename($_FILES['gambar']['name']);
+        $uploadFile = $uploadDir . $fileName;
+
+        if (!file_exists($uploadDir)) {
+            mkdir($uploadDir, 0755, true);
+        }
+
+        if (move_uploaded_file($_FILES['gambar']['tmp_name'], $uploadFile)) {
+            $gambar = $fileName; // Save file name to the database
+        } else {
+            echo '<div class="alert alert-danger">Gagal mengunggah gambar.</div>';
+        }
+    }
+
     // Handle NULL values in SQL
-    $sql = "INSERT INTO aset (nama_aset, deskripsi, nilai_awal, nilai_sekarang, nomor_seri, status, id_lokasi, id_kategori, id_penerimaan, kode_qr) 
+    $sql = "INSERT INTO aset (nama_aset, deskripsi, nilai_awal, nilai_sekarang, nomor_seri, status, id_lokasi, id_kategori, id_penerimaan, kode_qr, gambar) 
             VALUES ('$nama_aset', '$deskripsi', '$nilai_awal', '$nilai_sekarang', '$nomor_seri', '$status', '$id_lokasi', '$id_kategori', 
-            " . ($id_penerimaan ? "'$id_penerimaan'" : "NULL") . ", '$kode_qr')";
+            " . ($id_penerimaan ? "'$id_penerimaan'" : "NULL") . ", '$kode_qr', '$gambar')";
 
     if ($conn->query($sql) === TRUE) {
         header("Location: ../../../index.php");
@@ -117,13 +142,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="sidebar-wrapper scrollbar scrollbar-inner">
                 <div class="sidebar-content">
                     <ul class="nav nav-secondary">
-                        <li class="nav-item active">
+                        <li class="nav-item">
                             <a href="../../../index.php" class="collapsed" aria-expanded="false">
                                 <i class="fas fa-home"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item active submenu">
                             <a data-bs-toggle="collapse" href="#base">
                                 <i class="fas fa-layer-group"></i>
                                 <p>Pengadaan Aset</p>
@@ -136,7 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             <span class="sub-item">Kebutuhan Aset</span>
                                         </a>
                                     </li>
-                                    <li>
+                                    <li class="active">
                                         <a href="../../../components/pengadaan_aset/pengadaan/pengadaan_aset.php">
                                             <span class="sub-item">Pengadaan Aset</span>
                                         </a>
@@ -232,6 +257,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <li>
                                         <a href="../../../components/profile.php">
                                             <span class="sub-item">Pengguna</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="../../../components/kelola_pengguna.php">
+                                            <span class="sub-item">Kelola Pengguna</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -340,274 +370,274 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="container">
                 <div class="page-inner">
-                    <div class="container">
-                        <h2>Tambah Aset</h2>
-                        <form action="add_aset.php" method="post">
-                            <div class="mb-3">
-                                <label for="nama_aset" class="form-label">Nama Aset</label>
-                                <input type="text" class="form-control" id="nama_aset" name="nama_aset" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="deskripsi" class="form-label">Deskripsi</label>
-                                <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" required></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label for="nilai_awal" class="form-label">Nilai Awal</label>
-                                <input type="number" class="form-control" id="nilai_awal" name="nilai_awal" step="0.01" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="nilai_sekarang" class="form-label">Nilai Sekarang</label>
-                                <input type="number" class="form-control" id="nilai_sekarang" name="nilai_sekarang" step="0.01" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="nomor_seri" class="form-label">Nomor Seri</label>
-                                <input type="text" class="form-control" id="nomor_seri" name="nomor_seri" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="status" class="form-label">Status</label>
-                                <select class="form-control" id="status" name="status" required>
-                                    <option value="Aktif">Aktif</option>
-                                    <option value="Tidak Aktif">Tidak Aktif</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="id_lokasi" class="form-label">Lokasi</label>
-                                <select class="form-control" id="id_lokasi" name="id_lokasi" required>
-                                    <option value="">Silakan pilih lokasi</option>
-                                    <?php
-                                    $lokasiQuery = "SELECT id_lokasi, nama_lokasi FROM lokasi";
-                                    $lokasiResult = $conn->query($lokasiQuery);
-                                    if ($lokasiResult->num_rows > 0) {
-                                        while ($row = $lokasiResult->fetch_assoc()) {
-                                            echo '<option value="' . $row['id_lokasi'] . '">' . $row['nama_lokasi'] . '</option>';
-                                        }
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="id_kategori" class="form-label">Kategori</label>
-                                <select class="form-control" id="id_kategori" name="id_kategori" required>
-                                    <option value="">Silakan pilih kategori aset</option>
-                                    <?php
-                                    $kategoriQuery = "SELECT id_kategori, nama_kategori FROM kategori_aset";
-                                    $kategoriResult = $conn->query($kategoriQuery);
-                                    if ($kategoriResult->num_rows > 0) {
-                                        while ($row = $kategoriResult->fetch_assoc()) {
-                                            echo '<option value="' . $row['id_kategori'] . '">' . $row['nama_kategori'] . '</option>';
-                                        }
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="id_penerimaan" class="form-label">Penerimaan</label>
-                                <select class="form-control" id="id_penerimaan" name="id_penerimaan">
-                                    <option value="">Tidak ada</option>
-                                    <?php
-                                    $penerimaanQuery = "SELECT id_penerimaan, DATE_FORMAT(tanggal_penerimaan, '%d-%m-%Y') AS tanggal_penerimaan FROM penerimaan_aset";
-                                    $penerimaanResult = $conn->query($penerimaanQuery);
-                                    if ($penerimaanResult->num_rows > 0) {
-                                        while ($row = $penerimaanResult->fetch_assoc()) {
-                                            echo '<option value="' . $row['id_penerimaan'] . '">' . $row['tanggal_penerimaan'] . '</option>';
-                                        }
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="generate_qr" name="generate_qr">
-                                    <label class="form-check-label" for="generate_qr">
-                                        Generate QR Code
-                                    </label>
-                                </div>
-                            </div>
 
-                            <div class="d-grid gap-2 mb-3">
-                                <button type="submit" class="btn btn-primary">Simpan</button>
-                                <a href="../../../index.php" class="btn btn-danger">Batal</a>
-                            </div>
-                        </form>
-                    </div>
-
-                </div>
-            </div>
-
-
-            <footer class="footer">
-                <div class="container-fluid d-flex justify-content-between">
-                    <div class="copyright">
-                        Copyright @ 2024
-                        <a href="#">MI Darul Ulum</a>. All rights reserved
-                    </div>
-
-                    <div>Version 1.0</div>
-                </div>
-            </footer>
-        </div>
-
-        <!-- Custom template | don't include it in your project! -->
-        <div class="custom-template">
-            <div class="title">Settings</div>
-            <div class="custom-content">
-                <div class="switcher">
-                    <div class="switch-block">
-                        <h4>Logo Header</h4>
-                        <div class="btnSwitch">
-                            <button
-                                type="button"
-                                class="selected changeLogoHeaderColor"
-                                data-color="dark"></button>
-                            <button
-                                type="button"
-                                class="selected changeLogoHeaderColor"
-                                data-color="blue"></button>
-                            <button
-                                type="button"
-                                class="changeLogoHeaderColor"
-                                data-color="purple"></button>
-                            <button
-                                type="button"
-                                class="changeLogoHeaderColor"
-                                data-color="light-blue"></button>
-                            <button
-                                type="button"
-                                class="changeLogoHeaderColor"
-                                data-color="green"></button>
-                            <button
-                                type="button"
-                                class="changeLogoHeaderColor"
-                                data-color="orange"></button>
-                            <button
-                                type="button"
-                                class="changeLogoHeaderColor"
-                                data-color="red"></button>
-                            <button
-                                type="button"
-                                class="changeLogoHeaderColor"
-                                data-color="white"></button>
-                            <br />
-                            <button
-                                type="button"
-                                class="changeLogoHeaderColor"
-                                data-color="dark2"></button>
-                            <button
-                                type="button"
-                                class="changeLogoHeaderColor"
-                                data-color="blue2"></button>
-                            <button
-                                type="button"
-                                class="changeLogoHeaderColor"
-                                data-color="purple2"></button>
-                            <button
-                                type="button"
-                                class="changeLogoHeaderColor"
-                                data-color="light-blue2"></button>
-                            <button
-                                type="button"
-                                class="changeLogoHeaderColor"
-                                data-color="green2"></button>
-                            <button
-                                type="button"
-                                class="changeLogoHeaderColor"
-                                data-color="orange2"></button>
-                            <button
-                                type="button"
-                                class="changeLogoHeaderColor"
-                                data-color="red2"></button>
+                    <h2>Tambah Aset</h2>
+                    <form action="add_aset.php" method="post" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="nama_aset" class="form-label">Nama Aset</label>
+                            <input type="text" class="form-control" id="nama_aset" name="nama_aset" required>
                         </div>
-                    </div>
-                    <div class="switch-block">
-                        <h4>Navbar Header</h4>
-                        <div class="btnSwitch">
-                            <button
-                                type="button"
-                                class="changeTopBarColor"
-                                data-color="dark"></button>
-                            <button
-                                type="button"
-                                class="changeTopBarColor"
-                                data-color="blue"></button>
-                            <button
-                                type="button"
-                                class="changeTopBarColor"
-                                data-color="purple"></button>
-                            <button
-                                type="button"
-                                class="changeTopBarColor"
-                                data-color="light-blue"></button>
-                            <button
-                                type="button"
-                                class="changeTopBarColor"
-                                data-color="green"></button>
-                            <button
-                                type="button"
-                                class="changeTopBarColor"
-                                data-color="orange"></button>
-                            <button
-                                type="button"
-                                class="changeTopBarColor"
-                                data-color="red"></button>
-                            <button
-                                type="button"
-                                class="changeTopBarColor"
-                                data-color="white"></button>
-                            <br />
-                            <button
-                                type="button"
-                                class="changeTopBarColor"
-                                data-color="dark2"></button>
-                            <button
-                                type="button"
-                                class="selected changeTopBarColor"
-                                data-color="blue2"></button>
-                            <button
-                                type="button"
-                                class="changeTopBarColor"
-                                data-color="purple2"></button>
-                            <button
-                                type="button"
-                                class="changeTopBarColor"
-                                data-color="light-blue2"></button>
-                            <button
-                                type="button"
-                                class="changeTopBarColor"
-                                data-color="green2"></button>
-                            <button
-                                type="button"
-                                class="changeTopBarColor"
-                                data-color="orange2"></button>
-                            <button
-                                type="button"
-                                class="changeTopBarColor"
-                                data-color="red2"></button>
+                        <div class="mb-3">
+                            <label for="deskripsi" class="form-label">Deskripsi</label>
+                            <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" required></textarea>
                         </div>
-                    </div>
-                    <div class="switch-block">
-                        <h4>Sidebar</h4>
-                        <div class="btnSwitch">
-                            <button
-                                type="button"
-                                class="selected changeSideBarColor"
-                                data-color="white"></button>
-                            <button
-                                type="button"
-                                class="changeSideBarColor"
-                                data-color="dark"></button>
-                            <button
-                                type="button"
-                                class="changeSideBarColor"
-                                data-color="dark2"></button>
+                        <div class="mb-3">
+                            <label for="nilai_awal" class="form-label">Nilai Awal</label>
+                            <input type="number" class="form-control" id="nilai_awal" name="nilai_awal" step="0.01" required>
                         </div>
-                    </div>
+                        <div class="mb-3">
+                            <label for="nilai_sekarang" class="form-label">Nilai Sekarang</label>
+                            <input type="number" class="form-control" id="nilai_sekarang" name="nilai_sekarang" step="0.01" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-control" id="status" name="status" required>
+                                <option value="Aktif">Aktif</option>
+                                <option value="Tidak Aktif">Tidak Aktif</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_lokasi" class="form-label">Lokasi</label>
+                            <select class="form-control" id="id_lokasi" name="id_lokasi" required>
+                                <option value="">Silakan pilih lokasi</option>
+                                <?php
+                                $lokasiQuery = "SELECT id_lokasi, nama_lokasi FROM lokasi";
+                                $lokasiResult = $conn->query($lokasiQuery);
+                                if ($lokasiResult->num_rows > 0) {
+                                    while ($row = $lokasiResult->fetch_assoc()) {
+                                        echo '<option value="' . $row['id_lokasi'] . '">' . $row['nama_lokasi'] . '</option>';
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_kategori" class="form-label">Kategori</label>
+                            <select class="form-control" id="id_kategori" name="id_kategori" required>
+                                <option value="">Silakan pilih kategori aset</option>
+                                <?php
+                                $kategoriQuery = "SELECT id_kategori, nama_kategori FROM kategori_aset";
+                                $kategoriResult = $conn->query($kategoriQuery);
+                                if ($kategoriResult->num_rows > 0) {
+                                    while ($row = $kategoriResult->fetch_assoc()) {
+                                        echo '<option value="' . $row['id_kategori'] . '">' . $row['nama_kategori'] . '</option>';
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_penerimaan" class="form-label">Penerimaan</label>
+                            <select class="form-control" id="id_penerimaan" name="id_penerimaan">
+                                <option value="">Silakan pilih penerimaan aset</option>
+                                <?php
+                                $penerimaanQuery = "SELECT id_penerimaan, DATE_FORMAT(tanggal_penerimaan, '%d-%m-%Y') AS tanggal_penerimaan FROM penerimaan_aset";
+                                $penerimaanResult = $conn->query($penerimaanQuery);
+                                if ($penerimaanResult->num_rows > 0) {
+                                    while ($row = $penerimaanResult->fetch_assoc()) {
+                                        echo '<option value="' . $row['id_penerimaan'] . '">' . $row['tanggal_penerimaan'] . '</option>';
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="gambar" class="form-label">Unggah Gambar</label>
+                            <input type="file" class="form-control" id="gambar" name="gambar" accept="image/*">
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="generate_qr" name="generate_qr">
+                                <label class="form-check-label" for="generate_qr">
+                                    Generate QR Code
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 mb-3">
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <a href="../../../index.php" class="btn btn-secondary">Batal</a>
+                        </div>
+                    </form>
                 </div>
-            </div>
-            <div class="custom-toggle">
-                <i class="icon-settings"></i>
+
             </div>
         </div>
-        <!-- End Custom template -->
+
+
+        <footer class="footer">
+            <div class="container-fluid d-flex justify-content-between">
+                <div class="copyright">
+                    Copyright @ 2024
+                    <a href="#">MI Darul Ulum</a>. All rights reserved
+                </div>
+
+                <div>Version 1.0</div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Custom template | don't include it in your project! -->
+    <div class="custom-template">
+        <div class="title">Settings</div>
+        <div class="custom-content">
+            <div class="switcher">
+                <div class="switch-block">
+                    <h4>Logo Header</h4>
+                    <div class="btnSwitch">
+                        <button
+                            type="button"
+                            class="selected changeLogoHeaderColor"
+                            data-color="dark"></button>
+                        <button
+                            type="button"
+                            class="selected changeLogoHeaderColor"
+                            data-color="blue"></button>
+                        <button
+                            type="button"
+                            class="changeLogoHeaderColor"
+                            data-color="purple"></button>
+                        <button
+                            type="button"
+                            class="changeLogoHeaderColor"
+                            data-color="light-blue"></button>
+                        <button
+                            type="button"
+                            class="changeLogoHeaderColor"
+                            data-color="green"></button>
+                        <button
+                            type="button"
+                            class="changeLogoHeaderColor"
+                            data-color="orange"></button>
+                        <button
+                            type="button"
+                            class="changeLogoHeaderColor"
+                            data-color="red"></button>
+                        <button
+                            type="button"
+                            class="changeLogoHeaderColor"
+                            data-color="white"></button>
+                        <br />
+                        <button
+                            type="button"
+                            class="changeLogoHeaderColor"
+                            data-color="dark2"></button>
+                        <button
+                            type="button"
+                            class="changeLogoHeaderColor"
+                            data-color="blue2"></button>
+                        <button
+                            type="button"
+                            class="changeLogoHeaderColor"
+                            data-color="purple2"></button>
+                        <button
+                            type="button"
+                            class="changeLogoHeaderColor"
+                            data-color="light-blue2"></button>
+                        <button
+                            type="button"
+                            class="changeLogoHeaderColor"
+                            data-color="green2"></button>
+                        <button
+                            type="button"
+                            class="changeLogoHeaderColor"
+                            data-color="orange2"></button>
+                        <button
+                            type="button"
+                            class="changeLogoHeaderColor"
+                            data-color="red2"></button>
+                    </div>
+                </div>
+                <div class="switch-block">
+                    <h4>Navbar Header</h4>
+                    <div class="btnSwitch">
+                        <button
+                            type="button"
+                            class="changeTopBarColor"
+                            data-color="dark"></button>
+                        <button
+                            type="button"
+                            class="changeTopBarColor"
+                            data-color="blue"></button>
+                        <button
+                            type="button"
+                            class="changeTopBarColor"
+                            data-color="purple"></button>
+                        <button
+                            type="button"
+                            class="changeTopBarColor"
+                            data-color="light-blue"></button>
+                        <button
+                            type="button"
+                            class="changeTopBarColor"
+                            data-color="green"></button>
+                        <button
+                            type="button"
+                            class="changeTopBarColor"
+                            data-color="orange"></button>
+                        <button
+                            type="button"
+                            class="changeTopBarColor"
+                            data-color="red"></button>
+                        <button
+                            type="button"
+                            class="changeTopBarColor"
+                            data-color="white"></button>
+                        <br />
+                        <button
+                            type="button"
+                            class="changeTopBarColor"
+                            data-color="dark2"></button>
+                        <button
+                            type="button"
+                            class="selected changeTopBarColor"
+                            data-color="blue2"></button>
+                        <button
+                            type="button"
+                            class="changeTopBarColor"
+                            data-color="purple2"></button>
+                        <button
+                            type="button"
+                            class="changeTopBarColor"
+                            data-color="light-blue2"></button>
+                        <button
+                            type="button"
+                            class="changeTopBarColor"
+                            data-color="green2"></button>
+                        <button
+                            type="button"
+                            class="changeTopBarColor"
+                            data-color="orange2"></button>
+                        <button
+                            type="button"
+                            class="changeTopBarColor"
+                            data-color="red2"></button>
+                    </div>
+                </div>
+                <div class="switch-block">
+                    <h4>Sidebar</h4>
+                    <div class="btnSwitch">
+                        <button
+                            type="button"
+                            class="selected changeSideBarColor"
+                            data-color="white"></button>
+                        <button
+                            type="button"
+                            class="changeSideBarColor"
+                            data-color="dark"></button>
+                        <button
+                            type="button"
+                            class="changeSideBarColor"
+                            data-color="dark2"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="custom-toggle">
+            <i class="icon-settings"></i>
+        </div>
+    </div>
+    <!-- End Custom template -->
     </div>
     <!--   Core JS Files   -->
     <script src="../../../assets/js/core/jquery-3.7.1.min.js"></script>
