@@ -49,14 +49,15 @@
                                 <input type="password" name="password" id="password" class="form-control" required>
                                 <i class="fas fa-eye eye-icon" id="togglePassword"></i>
                             </div>
-
                             <div class="mb-3">
                                 <label for="role" class="form-label">Role:</label>
                                 <select name="role" id="role" class="form-select" required>
                                     <option value="1">Tata Usaha</option>
                                     <option value="2">Kepala Sekolah</option>
+                                    <option value="3">Guru</option> <!-- Tambahkan opsi ini -->
                                 </select>
                             </div>
+
 
                             <button type="submit" class="btn btn-primary w-100">Login</button>
                         </form>

@@ -21,12 +21,15 @@ if (isset($_GET['id'])) {
     }
 }
 ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Panels - Kaiadmin Bootstrap 5 Admin Dashboard</title>
+    <title>aset</title>
     <meta
         content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
         name="viewport" />
@@ -279,15 +282,26 @@ if (isset($_GET['id'])) {
 
                     <table class="table table-striped">
                         <tr>
-                            <th>QR Code</th>
+                            <th>Gambar Aset</th>
                             <td>
-                                <?php if ($aset['kode_qr']): ?>
-                                    <img src="images/qr_codes/<?php echo $aset['kode_qr']; ?>.png" alt="QR Code" style="width: 150px; height: 150px;">
+                                <?php if (!empty($aset['gambar'])): ?>
+                                    <img src="../../../components/dashboard/aset/images/aset/<?php echo $aset['gambar']; ?>" alt="Gambar Aset" style="width: 200px; height: auto; border-radius: 4px;">
                                 <?php else: ?>
                                     Tidak tersedia
                                 <?php endif; ?>
                             </td>
                         </tr>
+                        <tr>
+                            <th>QR Code</th>
+                            <td>
+                                <?php if (!empty($aset['kode_qr'])): ?>
+                                    <img src="../../../components/dashboard/aset/images/qr_codes/<?php echo $aset['kode_qr']; ?>.png" alt="QR Code" style="width: 150px; height: 150px;">
+                                <?php else: ?>
+                                    Tidak tersedia
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+
                         <tr>
                             <th>Nama Aset</th>
                             <td><?php echo $aset['nama_aset']; ?></td>
@@ -320,7 +334,6 @@ if (isset($_GET['id'])) {
                             <th>Kategori</th>
                             <td><?php echo $aset['nama_kategori']; ?></td>
                         </tr>
-
                     </table>
                     <a href="../../../kepsek.php" class="btn btn-danger mt-3 w-100">Kembali</a>
                 </div>
