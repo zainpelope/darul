@@ -194,6 +194,11 @@ $result_aset = $conn->query($sql_aset);
                                             <span class="sub-item">Pengguna</span>
                                         </a>
                                     </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="sub-item">Kelola Pengguna</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
@@ -302,8 +307,9 @@ $result_aset = $conn->query($sql_aset);
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="tanggal_perbaikan" class="form-label">Tanggal Pemeliharaan</label>
-                            <input type="date" id="tanggal_perbaikan" name="tanggal_perbaikan" class="form-control" required>
+                            <label for="tanggal_perbaikan" class="form-label">Tanggal Perbaikan</label>
+                            <input type="date" class="form-control" id="tanggal_perbaikan" name="tanggal_perbaikan"
+                                value="<?php echo date('Y-m-d'); ?>" required>
                         </div>
                         <div class="mb-3">
                             <label for="deskripsi_kegiatan" class="form-label">Deskripsi Pemeliharaan</label>
@@ -319,6 +325,10 @@ $result_aset = $conn->query($sql_aset);
                                 <option value="Selesai">Selesai</option>
                                 <option value="Belum Selesai">Belum Selesai</option>
                             </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="bukti_perbaikan" class="form-label">Upload Bukti Perbaikan</label>
+                            <input type="file" id="bukti_perbaikan" name="bukti_perbaikan" class="form-control" accept=".jpg,.jpeg,.png,.pdf">
                         </div>
 
                         <button type="submit" class="btn btn-primary">Simpan</button>

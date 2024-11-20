@@ -1,7 +1,9 @@
 <?php
 include '../koneksi.php';
 
-$sql = "SELECT p.id_perbaikan, a.nama_aset, p.status, p.biaya, p.tanggal_perbaikan, p.deksripsi_kegiatan 
+
+$sql = "SELECT p.id_perbaikan, a.nama_aset, p.status, p.biaya, p.tanggal_perbaikan, 
+        p.deksripsi_kegiatan, p.bukti_perbaikan 
         FROM perbaikan_aset p
         JOIN aset a ON p.id_aset = a.id_aset";
 $result = $conn->query($sql);
@@ -197,6 +199,11 @@ $result = $conn->query($sql);
                       <span class="sub-item">Pengguna</span>
                     </a>
                   </li>
+                  <li>
+                    <a href="../components/kelola_pengguna.php">
+                      <span class="sub-item">Kelola Pengguna</span>
+                    </a>
+                  </li>
                 </ul>
               </div>
             </li>
@@ -336,9 +343,8 @@ $result = $conn->query($sql);
                 <th>Deskripsi Pemeliharaan</th>
                 <th>Biaya</th>
                 <th>Status</th>
-
                 <th>Tanggal Pemeliharaan</th>
-
+                <th>Bukti Perbaikan</th>
                 <th>Aksi</th>
               </tr>
             </thead>
@@ -351,13 +357,20 @@ $result = $conn->query($sql);
                   $textColor = '#ffffff';
                   echo "<tr>";
                   echo "<td>" . $no . "</td>";
-                  echo "<td>" . htmlspecialchars($row['nama_aset']) . "</td>";
-                  echo "<td>" . htmlspecialchars($row['deksripsi_kegiatan']) . "</td>";
+                  echo "<td>" . htmlspecialchars($row['nama_aset'] ?? '') . "</td>";
+                  echo "<td>" . htmlspecialchars($row['deksripsi_kegiatan'] ?? '') . "</td>";
 
                   echo "<td>" . number_format($row['biaya'], 2) . "</td>";
                   echo '<td><span style="background-color: ' . $backgroundColor . '; color: ' . $textColor . '; padding: 2px 6px; border-radius: 4px; font-style: italic;">' . htmlspecialchars($row['status']) . '</span></td>';
-
                   echo "<td>" . date('d-m-Y', strtotime($row['tanggal_perbaikan'])) . "</td>";
+
+                  // Tombol Bukti Perbaikan
+                  if (!empty($row['bukti_perbaikan']) && $row['status'] == 'Selesai') {
+                    $file_path = '../uploads/' . htmlspecialchars($row['bukti_perbaikan']);
+                    echo "<td><a href='$file_path' target='_blank' class='btn btn-info btn-sm'>Lihat Bukti</a></td>";
+                  } else {
+                    echo "<td><a href='pemeliharaan_aset/upload_bukti.php?id=" . $row['id_perbaikan'] . "' class='btn btn-warning btn-sm'>Upload Bukti</a></td>";
+                  }
 
                   echo "<td>";
                   echo "<a href='pemeliharaan_aset/edit_pemeliharaan.php?id=" . $row['id_perbaikan'] . "' class='btn btn-warning btn-sm'>Edit</a> ";
@@ -367,7 +380,7 @@ $result = $conn->query($sql);
                   $no++;
                 }
               } else {
-                echo "<tr><td colspan='7'>Tidak ada data</td></tr>";
+                echo "<tr><td colspan='8'>Tidak ada data</td></tr>";
               }
               ?>
             </tbody>

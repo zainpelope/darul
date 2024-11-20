@@ -220,6 +220,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             <span class="sub-item">Pengguna</span>
                                         </a>
                                     </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="sub-item">Kelola Pengguna</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
@@ -391,7 +396,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <!-- Input Tanggal Penerimaan -->
                         <div class="mb-3">
                             <label for="tanggal_penerimaan" class="form-label">Tanggal Penerimaan</label>
-                            <input type="date" class="form-control" id="tanggal_penerimaan" name="tanggal_penerimaan" required>
+                            <input type="date" class="form-control" id="tanggal_penerimaan" name="tanggal_penerimaan"
+                                value="<?php echo date('Y-m-d'); ?>" required>
                         </div>
                         <!-- Input Kondisi -->
                         <div class="mb-3">

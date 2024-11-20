@@ -214,6 +214,11 @@ $result_kebutuhan = $conn->query($sql_kebutuhan);
                                             <span class="sub-item">Pengguna</span>
                                         </a>
                                     </li>
+                                    <li>
+                                        <a href="../../../components/kelola_pengguna.php">
+                                            <span class="sub-item">Kelola Pengguna</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
@@ -386,6 +391,12 @@ $result_kebutuhan = $conn->query($sql_kebutuhan);
                     </form>
 
                 </div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const today = new Date().toISOString().split('T')[0];
+                        document.getElementById('tanggal_pengadaan').value = today;
+                    });
+                </script>
                 <footer class="footer">
                     <div class="container-fluid d-flex justify-content-between">
                         <div class="copyright">

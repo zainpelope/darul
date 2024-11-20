@@ -200,6 +200,11 @@ $result_aset = $conn->query($sql_aset);
                                             <span class="sub-item">Pengguna</span>
                                         </a>
                                     </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="sub-item">Kelola Pengguna</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
@@ -323,13 +328,13 @@ $result_aset = $conn->query($sql_aset);
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="tanggal_perbaikan" class="form-label">Tanggal Pemeliharaan</label>
+                            <label for="tanggal_perbaikan" class="form-label">Tanggal Perbaikan</label>
                             <input type="date" id="tanggal_perbaikan" name="tanggal_perbaikan" class="form-control" value="<?php echo $row['tanggal_perbaikan']; ?>" required>
                         </div>
-                        <div class="mb-3">
-                            <label for="deskripsi_kegiatan" class="form-label">Deskripsi Pemeliharaan</label>
-                            <textarea id="deskripsi_kegiatan" name="deskripsi_kegiatan" class="form-control" rows="3" required><?php echo htmlspecialchars($row['deksripsi_kegiatan']); ?></textarea>
-                        </div>
+                        <textarea id="deskripsi_kegiatan" name="deskripsi_kegiatan" class="form-control" rows="3" required>
+    <?php echo htmlspecialchars($row['deksripsi_kegiatan'] ?? ''); ?>
+</textarea>
+
                         <div class="mb-3">
                             <label for="biaya" class="form-label">Biaya</label>
                             <input type="number" id="biaya" name="biaya" class="form-control" step="0.01" value="<?php echo $row['biaya']; ?>" required>
