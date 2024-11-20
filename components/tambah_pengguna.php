@@ -1,12 +1,5 @@
 <?php
-// Koneksi ke database
-$conn = new mysqli("localhost", "root", "root", "darul_ulum");
-
-if ($conn->connect_error) {
-    die("Koneksi gagal: " . $conn->connect_error);
-}
-
-// Proses form
+include '../koneksi.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_role = $_POST['id_role'];
     $nama_pengguna = $_POST['nama_pengguna'];

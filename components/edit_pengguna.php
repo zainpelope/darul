@@ -1,12 +1,5 @@
 <?php
-// Koneksi ke database
-$conn = new mysqli("localhost", "root", "root", "darul_ulum");
-
-if ($conn->connect_error) {
-    die("Koneksi gagal: " . $conn->connect_error);
-}
-
-// Ambil data pengguna berdasarkan ID
+include '../koneksi.php';
 $id_pengguna = $_GET['id'];
 $sql = "SELECT * FROM pengguna WHERE id_pengguna = $id_pengguna";
 $result = $conn->query($sql);

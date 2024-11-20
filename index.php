@@ -305,7 +305,7 @@ include 'koneksi.php';
         <h2>Data Aset</h2>
 
         <?php
-        // Query untuk mengambil data aset beserta gambar, deskripsi, nilai awal, dan nilai sekarang
+       
         $sql = "SELECT a.id_aset, a.nama_aset, a.deskripsi, a.nilai_awal, a.nilai_sekarang, k.nama_kategori, l.nama_lokasi, a.status, a.gambar
             FROM aset a
             LEFT JOIN kategori_aset k ON a.id_kategori = k.id_kategori
@@ -313,7 +313,7 @@ include 'koneksi.php';
 
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
-          echo '<div class="table-responsive">'; // Tambahkan div dengan class table-responsive
+          echo '<div class="table-responsive">'; 
           echo '<table class="table table-striped">';
           echo '<thead>
                 <tr>
@@ -377,7 +377,7 @@ include 'koneksi.php';
       </footer>
     </div>
 
-    <!-- Custom template | don't include it in your project! -->
+
     <div class="custom-template">
       <div class="title">Settings</div>
       <div class="custom-content">

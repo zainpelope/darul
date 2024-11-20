@@ -256,6 +256,7 @@ include 'koneksi.php';
 
                     $result = $conn->query($sql);
                     if ($result->num_rows > 0) {
+                        echo '<div class="table-responsive">';
                         echo '<table class="table table-striped">';
                         echo '<thead>
                     <tr>

@@ -13,17 +13,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $status = $_POST['status'];
     $id_lokasi = $_POST['id_lokasi'];
     $id_kategori = $_POST['id_kategori'];
-    $id_penerimaan = !empty($_POST['id_penerimaan']) ? $_POST['id_penerimaan'] : null; // Handle empty selection
+    $id_penerimaan = !empty($_POST['id_penerimaan']) ? $_POST['id_penerimaan'] : null; 
     $generate_qr = isset($_POST['generate_qr']);
 
-    // Generate nomor seri otomatis
+    
     $queryCount = "SELECT COUNT(*) AS total FROM aset";
     $resultCount = $conn->query($queryCount);
     $rowCount = $resultCount->fetch_assoc();
-    $total = $rowCount['total'] + 1; // Increment count for the new entry
-    $nomor_seri = str_pad($total, 5, '0', STR_PAD_LEFT); // Format as 5-digit number
+    $total = $rowCount['total'] + 1; 
+    $nomor_seri = str_pad($total, 5, '0', STR_PAD_LEFT); 
 
-    // Generate QR code
+
     if ($generate_qr) {
         $kode_qr = 'QR-' . uniqid();
         $qrCodeDir = __DIR__ . '/images/qr_codes/';
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         QRcode::png($kode_qr, $qrCodeFile);
     }
 
-    // Handle file upload for image
+ 
     if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] === UPLOAD_ERR_OK) {
         $uploadDir = __DIR__ . '/images/aset/';
         $fileName = uniqid() . '-' . basename($_FILES['gambar']['name']);
@@ -47,13 +47,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         if (move_uploaded_file($_FILES['gambar']['tmp_name'], $uploadFile)) {
-            $gambar = $fileName; // Save file name to the database
+            $gambar = $fileName; 
         } else {
             echo '<div class="alert alert-danger">Gagal mengunggah gambar.</div>';
         }
     }
 
-    // Handle NULL values in SQL
+  
     $sql = "INSERT INTO aset (nama_aset, deskripsi, nilai_awal, nilai_sekarang, nomor_seri, status, id_lokasi, id_kategori, id_penerimaan, kode_qr, gambar) 
             VALUES ('$nama_aset', '$deskripsi', '$nilai_awal', '$nilai_sekarang', '$nomor_seri', '$status', '$id_lokasi', '$id_kategori', 
             " . ($id_penerimaan ? "'$id_penerimaan'" : "NULL") . ", '$kode_qr', '$gambar')";
@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         href="../../../assets/img/kaiadmin/favicon.ico"
         type="image/x-icon" />
 
-    <!-- Fonts and icons -->
+
     <script src="../../../assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
         WebFont.load({
@@ -456,7 +456,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         <div class="d-grid gap-2 mb-3">
                             <button type="submit" class="btn btn-primary">Simpan</button>
-                            <a href="../../../index.php" class="btn btn-secondary">Batal</a>
+
+                            <a href="../../../components/pengadaan_aset/pengadaan/pengadaan_aset.php" class="btn btn-secondary">Batal</a>
                         </div>
                     </form>
                 </div>

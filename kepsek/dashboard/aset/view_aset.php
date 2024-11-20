@@ -291,6 +291,7 @@ if (isset($_GET['id'])) {
                                 <?php endif; ?>
                             </td>
                         </tr>
+
                         <tr>
                             <th>QR Code</th>
                             <td>
