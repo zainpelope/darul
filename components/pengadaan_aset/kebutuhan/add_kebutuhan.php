@@ -1,10 +1,22 @@
 <?php
 include '../../../koneksi.php';
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $deskripsi_kebutuhan = $_POST['deskripsi_kebutuhan'];
     $tanggal_dibuat = $_POST['tanggal_dibuat'];
     $status = $_POST['status'];
+
+
+    if ($status == 'Pending') {
+
+        $currentDate = new DateTime();
+        $createdDate = new DateTime($tanggal_dibuat);
+        $interval = $createdDate->diff($currentDate);
+
+
+        if ($interval->days >= 7) {
+            $status = 'Diterima';
+        }
+    }
 
     $sql = "INSERT INTO kebutuhan_aset (deskripsi_kebutuhan, tanggal_dibuat, status) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($sql);
@@ -12,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($stmt->execute()) {
         header('Location: ../../../components/pengadaan_aset/kebutuhan/kebutuhan_aset.php');
-
         exit;
     } else {
         echo "Error: " . $stmt->error;
@@ -213,6 +224,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                             <span class="sub-item">Pengguna</span>
                                         </a>
                                     </li>
+                                    <li>
+                                        <a href="../../../components/kelola_pengguna.php">
+                                            <span class="sub-item">Kelola Pengguna</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
@@ -374,7 +390,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 </div>
             </div>
-
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const today = new Date().toISOString().split('T')[0];
+                    document.getElementById('tanggal_dibuat').value = today;
+                });
+            </script>
 
             <footer class="footer">
                 <div class="container-fluid d-flex justify-content-between">
