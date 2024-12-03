@@ -4,7 +4,7 @@ include '../../koneksi.php';
 
 $id_aset = $_POST['id_aset'];
 $tanggal_perbaikan = $_POST['tanggal_perbaikan'];
-$deskripsi_kegiatan = $_POST['deskripsi_kegiatan'];
+$deksripsi_kegiatan     = $_POST['deksripsi_kegiatan	'];
 $biaya = $_POST['biaya'];
 $status = $_POST['status'];
 
@@ -35,8 +35,8 @@ if (isset($_FILES['bukti_perbaikan']) && $_FILES['bukti_perbaikan']['error'] ===
 }
 
 // Insert data ke database
-$sql = "INSERT INTO perbaikan_aset (id_aset, tanggal_perbaikan, deskripsi_kegiatan, biaya, status, bukti_perbaikan) 
-        VALUES ('$id_aset', '$tanggal_perbaikan', '$deskripsi_kegiatan', '$biaya', '$status', '$bukti_perbaikan')";
+$sql = "INSERT INTO perbaikan_aset (id_aset, tanggal_perbaikan, deksripsi_kegiatan	, biaya, status, bukti_perbaikan) 
+        VALUES ('$id_aset', '$tanggal_perbaikan', '$deksripsi_kegiatan	', '$biaya', '$status', '$bukti_perbaikan')";
 
 if ($conn->query($sql) === TRUE) {
     header("Location: ../../components/pemeliharaan_aset.php");

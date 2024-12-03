@@ -312,6 +312,7 @@ $result = $conn->query($sql);
                     </div>
                     <h2>Daftar Penghapusan Aset</h2>
                     <a href="penghapusan/add_penghapusan.php" class="btn btn-primary mt-3">Tambah Penghapusan Aset</a>
+
                     <table class="table">
                         <thead>
                             <tr>

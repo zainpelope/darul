@@ -9,13 +9,21 @@ $tanggalResult = $conn->query($tanggalQuery);
 $selectedDate = isset($_POST['tanggal_penghapusan']) ? $conn->real_escape_string($_POST['tanggal_penghapusan']) : '';
 
 
-$sql = "SELECT pa.id_penghapusan, pa.tanggal_penghapusan, a.nama_aset, pa.alasan_penghapusan, pa.nilai_penghapusan, pa.status
-        FROM penghapusan_aset pa
-        LEFT JOIN aset a ON pa.id_aset = a.id_aset
-        WHERE pa.tanggal_penghapusan = '$selectedDate'";
+if ($selectedDate) {
+    $sql = "SELECT pa.id_penghapusan, pa.tanggal_penghapusan, a.nama_aset, pa.alasan_penghapusan, pa.nilai_penghapusan, pa.status
+            FROM penghapusan_aset pa
+            LEFT JOIN aset a ON pa.id_aset = a.id_aset
+            WHERE pa.tanggal_penghapusan = '$selectedDate'";
+} else {
+    $sql = "SELECT pa.id_penghapusan, pa.tanggal_penghapusan, a.nama_aset, pa.alasan_penghapusan, pa.nilai_penghapusan, pa.status
+            FROM penghapusan_aset pa
+            LEFT JOIN aset a ON pa.id_aset = a.id_aset";
+}
+
 
 $result = $conn->query($sql);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 

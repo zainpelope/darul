@@ -377,21 +377,12 @@ $result = $conn->query($sql);
                         </tbody>
                     </table>
                 </div>
-
+                <?php include '../../../footer.html'; ?>
             </div>
         </div>
 
 
-        <footer class="footer">
-            <div class="container-fluid d-flex justify-content-between">
-                <div class="copyright">
-                    Copyright @ 2024
-                    <a href="#">MI Darul Ulum</a>. All rights reserved
-                </div>
 
-                <div>Version 1.0</div>
-            </div>
-        </footer>
     </div>
 
     <!-- Custom template | don't include it in your project! -->

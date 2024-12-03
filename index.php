@@ -301,21 +301,40 @@ include 'koneksi.php';
         <!-- End Navbar -->
       </div>
 
-      <div class="container mt-5">
-        <h2>Data Aset</h2>
+      <div class="container">
+        <div class="page-inner">
+          <div class="page-header">
+            <h3 class="fw-bold mb-3">Dashboard</h3>
+            <ul class="breadcrumbs mb-3">
+              <li class="nav-home">
+                <a href="#">
+                  <i class="icon-home"></i>
+                </a>
+              </li>
+              <li class="separator">
+                <i class="icon-arrow-right"></i>
+              </li>
+              <li class="nav-item">
+                <a href="#">Data Aset</a>
+              </li>
 
-        <?php
-       
-        $sql = "SELECT a.id_aset, a.nama_aset, a.deskripsi, a.nilai_awal, a.nilai_sekarang, k.nama_kategori, l.nama_lokasi, a.status, a.gambar
+            </ul>
+          </div>
+          <h2>Data Aset</h2>
+
+          <?php
+
+          $sql = "SELECT a.id_aset, a.nama_aset, a.deskripsi, a.nilai_awal, a.nilai_sekarang, k.nama_kategori, l.nama_lokasi, a.status, a.gambar
             FROM aset a
             LEFT JOIN kategori_aset k ON a.id_kategori = k.id_kategori
             LEFT JOIN lokasi l ON a.id_lokasi = l.id_lokasi";
 
-        $result = $conn->query($sql);
-        if ($result->num_rows > 0) {
-          echo '<div class="table-responsive">'; 
-          echo '<table class="table table-striped">';
-          echo '<thead>
+          $result = $conn->query($sql);
+          if ($result->num_rows > 0) {
+            echo '<div class="table-responsive">';
+            echo '<table class="table table-striped">';
+
+            echo '<thead>
                 <tr>
                     <th>No</th>
                     <th>Nama Aset</th>
@@ -329,280 +348,274 @@ include 'koneksi.php';
                     <th>Aksi</th>
                 </tr>
               </thead>';
-          echo '<tbody>';
+            echo '<tbody>';
 
-          $no = 1;
-          while ($row = $result->fetch_assoc()) {
-            $backgroundColor = ($row['status'] == 'Aktif') ? '#28a745' : '#dc3545';
-            $textColor = '#ffffff';
-            $gambarPath = !empty($row['gambar']) ? 'components/dashboard/aset/images/aset/' . $row['gambar'] : 'components/dashboard/aset/images/default.png';
+            $no = 1;
+            while ($row = $result->fetch_assoc()) {
+              $backgroundColor = ($row['status'] == 'Aktif') ? '#28a745' : '#dc3545';
+              $textColor = '#ffffff';
+              $gambarPath = !empty($row['gambar']) ? 'components/dashboard/aset/images/aset/' . $row['gambar'] : 'components/dashboard/aset/images/default.png';
 
-            echo '<tr>';
-            echo '<td>' . $no++ . '</td>';
-            echo '<td>' . htmlspecialchars($row['nama_aset']) . '</td>';
-            echo '<td><img src="' . $gambarPath . '" alt="Gambar Aset" style="width: 100px; height: 100px; border-radius: 8px;"></td>';
-            echo '<td>' . htmlspecialchars($row['deskripsi']) . '</td>';
-            echo '<td>' . htmlspecialchars(number_format($row['nilai_awal'], 2, ',', '.')) . '</td>';
-            echo '<td>' . htmlspecialchars(number_format($row['nilai_sekarang'], 2, ',', '.')) . '</td>';
-            echo '<td>' . htmlspecialchars($row['nama_kategori']) . '</td>';
-            echo '<td>' . htmlspecialchars($row['nama_lokasi']) . '</td>';
-            echo '<td><span style="background-color: ' . $backgroundColor . '; color: ' . $textColor . '; padding: 2px 6px; border-radius: 4px; font-style: italic;">' . htmlspecialchars($row['status']) . '</span></td>';
-            echo '<td>
+              echo '<tr>';
+              echo '<td>' . $no++ . '</td>';
+              echo '<td>' . htmlspecialchars($row['nama_aset']) . '</td>';
+              echo '<td><img src="' . $gambarPath . '" alt="Gambar Aset" style="width: 100px; height: 100px; border-radius: 8px;"></td>';
+              echo '<td>' . htmlspecialchars($row['deskripsi']) . '</td>';
+              echo '<td>' . htmlspecialchars(number_format($row['nilai_awal'], 2, ',', '.')) . '</td>';
+              echo '<td>' . htmlspecialchars(number_format($row['nilai_sekarang'], 2, ',', '.')) . '</td>';
+              echo '<td>' . htmlspecialchars($row['nama_kategori']) . '</td>';
+              echo '<td>' . htmlspecialchars($row['nama_lokasi']) . '</td>';
+              echo '<td><span style="background-color: ' . $backgroundColor . '; color: ' . $textColor . '; padding: 2px 6px; border-radius: 4px; font-style: italic;">' . htmlspecialchars($row['status']) . '</span></td>';
+              echo '<td>
                     <a href="components/dashboard/aset/view_aset.php?id=' . $row['id_aset'] . '" class="btn btn-info">View</a>
                     <a href="components/dashboard/aset/edit_aset.php?id=' . $row['id_aset'] . '" class="btn btn-primary">Edit</a>
                   </td>';
-            echo '</tr>';
+              echo '</tr>';
+            }
+
+            echo '</tbody></table>';
+            echo '</div>'; // Tutup div table-responsive
+          } else {
+            echo '<div class="alert alert-warning">Tidak ada data.</div>';
           }
 
-          echo '</tbody></table>';
-          echo '</div>'; // Tutup div table-responsive
-        } else {
-          echo '<div class="alert alert-warning">Tidak ada data.</div>';
-        }
+          $conn->close();
+          ?>
 
-        $conn->close();
-        ?>
+        </div>
+
+
       </div>
 
-
-      <footer class="footer">
-        <div class="container-fluid d-flex justify-content-between">
-          <div class="copyright">
-            Copyright @ 2024
-            <a href="#">MI Darul Ulum</a>. All rights reserved
-          </div>
-
-          <div>Version 1.0</div>
-        </div>
-      </footer>
-    </div>
+      <?php include 'footer.html'; ?>
 
 
-    <div class="custom-template">
-      <div class="title">Settings</div>
-      <div class="custom-content">
-        <div class="switcher">
-          <div class="switch-block">
-            <h4>Logo Header</h4>
-            <div class="btnSwitch">
-              <button
-                type="button"
-                class="selected changeLogoHeaderColor"
-                data-color="dark"></button>
-              <button
-                type="button"
-                class="changeLogoHeaderColor"
-                data-color="blue"></button>
-              <button
-                type="button"
-                class="changeLogoHeaderColor"
-                data-color="purple"></button>
-              <button
-                type="button"
-                class="changeLogoHeaderColor"
-                data-color="light-blue"></button>
-              <button
-                type="button"
-                class="changeLogoHeaderColor"
-                data-color="green"></button>
-              <button
-                type="button"
-                class="changeLogoHeaderColor"
-                data-color="orange"></button>
-              <button
-                type="button"
-                class="changeLogoHeaderColor"
-                data-color="red"></button>
-              <button
-                type="button"
-                class="changeLogoHeaderColor"
-                data-color="white"></button>
-              <br />
-              <button
-                type="button"
-                class="changeLogoHeaderColor"
-                data-color="dark2"></button>
-              <button
-                type="button"
-                class="changeLogoHeaderColor"
-                data-color="blue2"></button>
-              <button
-                type="button"
-                class="changeLogoHeaderColor"
-                data-color="purple2"></button>
-              <button
-                type="button"
-                class="changeLogoHeaderColor"
-                data-color="light-blue2"></button>
-              <button
-                type="button"
-                class="changeLogoHeaderColor"
-                data-color="green2"></button>
-              <button
-                type="button"
-                class="changeLogoHeaderColor"
-                data-color="orange2"></button>
-              <button
-                type="button"
-                class="changeLogoHeaderColor"
-                data-color="red2"></button>
+      <div class="custom-template">
+        <div class="title">Settings</div>
+        <div class="custom-content">
+          <div class="switcher">
+            <div class="switch-block">
+              <h4>Logo Header</h4>
+              <div class="btnSwitch">
+                <button
+                  type="button"
+                  class="selected changeLogoHeaderColor"
+                  data-color="dark"></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="blue"></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="purple"></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="light-blue"></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="green"></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="orange"></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="red"></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="white"></button>
+                <br />
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="dark2"></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="blue2"></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="purple2"></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="light-blue2"></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="green2"></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="orange2"></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="red2"></button>
+              </div>
             </div>
-          </div>
-          <div class="switch-block">
-            <h4>Navbar Header</h4>
-            <div class="btnSwitch">
-              <button
-                type="button"
-                class="changeTopBarColor"
-                data-color="dark"></button>
-              <button
-                type="button"
-                class="changeTopBarColor"
-                data-color="blue"></button>
-              <button
-                type="button"
-                class="changeTopBarColor"
-                data-color="purple"></button>
-              <button
-                type="button"
-                class="changeTopBarColor"
-                data-color="light-blue"></button>
-              <button
-                type="button"
-                class="changeTopBarColor"
-                data-color="green"></button>
-              <button
-                type="button"
-                class="changeTopBarColor"
-                data-color="orange"></button>
-              <button
-                type="button"
-                class="changeTopBarColor"
-                data-color="red"></button>
-              <button
-                type="button"
-                class="selected changeTopBarColor"
-                data-color="white"></button>
-              <br />
-              <button
-                type="button"
-                class="changeTopBarColor"
-                data-color="dark2"></button>
-              <button
-                type="button"
-                class="changeTopBarColor"
-                data-color="blue2"></button>
-              <button
-                type="button"
-                class="changeTopBarColor"
-                data-color="purple2"></button>
-              <button
-                type="button"
-                class="changeTopBarColor"
-                data-color="light-blue2"></button>
-              <button
-                type="button"
-                class="changeTopBarColor"
-                data-color="green2"></button>
-              <button
-                type="button"
-                class="changeTopBarColor"
-                data-color="orange2"></button>
-              <button
-                type="button"
-                class="changeTopBarColor"
-                data-color="red2"></button>
+            <div class="switch-block">
+              <h4>Navbar Header</h4>
+              <div class="btnSwitch">
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="dark"></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="blue"></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="purple"></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="light-blue"></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="green"></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="orange"></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="red"></button>
+                <button
+                  type="button"
+                  class="selected changeTopBarColor"
+                  data-color="white"></button>
+                <br />
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="dark2"></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="blue2"></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="purple2"></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="light-blue2"></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="green2"></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="orange2"></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="red2"></button>
+              </div>
             </div>
-          </div>
-          <div class="switch-block">
-            <h4>Sidebar</h4>
-            <div class="btnSwitch">
-              <button
-                type="button"
-                class="changeSideBarColor"
-                data-color="white"></button>
-              <button
-                type="button"
-                class="selected changeSideBarColor"
-                data-color="dark"></button>
-              <button
-                type="button"
-                class="changeSideBarColor"
-                data-color="dark2"></button>
+            <div class="switch-block">
+              <h4>Sidebar</h4>
+              <div class="btnSwitch">
+                <button
+                  type="button"
+                  class="changeSideBarColor"
+                  data-color="white"></button>
+                <button
+                  type="button"
+                  class="selected changeSideBarColor"
+                  data-color="dark"></button>
+                <button
+                  type="button"
+                  class="changeSideBarColor"
+                  data-color="dark2"></button>
+              </div>
             </div>
           </div>
         </div>
+
+        <div class="custom-toggle">
+          <i class="icon-settings"></i>
+        </div>
       </div>
-      <div class="custom-toggle">
-        <i class="icon-settings"></i>
-      </div>
+      <!-- End Custom template -->
     </div>
-    <!-- End Custom template -->
-  </div>
-  <!--   Core JS Files   -->
-  <script src="assets/js/core/jquery-3.7.1.min.js"></script>
-  <script src="assets/js/core/popper.min.js"></script>
-  <script src="assets/js/core/bootstrap.min.js"></script>
+    <!--   Core JS Files   -->
+    <script src="assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/core/popper.min.js"></script>
+    <script src="assets/js/core/bootstrap.min.js"></script>
 
-  <!-- jQuery Scrollbar -->
-  <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <!-- jQuery Scrollbar -->
+    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
 
-  <!-- Chart JS -->
-  <script src="assets/js/plugin/chart.js/chart.min.js"></script>
+    <!-- Chart JS -->
+    <script src="assets/js/plugin/chart.js/chart.min.js"></script>
 
-  <!-- jQuery Sparkline -->
-  <script src="assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+    <!-- jQuery Sparkline -->
+    <script src="assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
 
-  <!-- Chart Circle -->
-  <script src="assets/js/plugin/chart-circle/circles.min.js"></script>
+    <!-- Chart Circle -->
+    <script src="assets/js/plugin/chart-circle/circles.min.js"></script>
 
-  <!-- Datatables -->
-  <script src="assets/js/plugin/datatables/datatables.min.js"></script>
+    <!-- Datatables -->
+    <script src="assets/js/plugin/datatables/datatables.min.js"></script>
 
-  <!-- Bootstrap Notify -->
-  <script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+    <!-- Bootstrap Notify -->
+    <script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
 
-  <!-- jQuery Vector Maps -->
-  <script src="assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
-  <script src="assets/js/plugin/jsvectormap/world.js"></script>
+    <!-- jQuery Vector Maps -->
+    <script src="assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+    <script src="assets/js/plugin/jsvectormap/world.js"></script>
 
-  <!-- Sweet Alert -->
-  <script src="assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+    <!-- Sweet Alert -->
+    <script src="assets/js/plugin/sweetalert/sweetalert.min.js"></script>
 
-  <!-- Kaiadmin JS -->
-  <script src="assets/js/kaiadmin.min.js"></script>
+    <!-- Kaiadmin JS -->
+    <script src="assets/js/kaiadmin.min.js"></script>
 
-  <!-- Kaiadmin DEMO methods, don't include it in your project! -->
-  <script src="assets/js/setting-demo.js"></script>
+    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+    <script src="assets/js/setting-demo.js"></script>
 
-  <script>
-    $("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
-      type: "line",
-      height: "70",
-      width: "100%",
-      lineWidth: "2",
-      lineColor: "#177dff",
-      fillColor: "rgba(23, 125, 255, 0.14)",
-    });
+    <script>
+      $("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
+        type: "line",
+        height: "70",
+        width: "100%",
+        lineWidth: "2",
+        lineColor: "#177dff",
+        fillColor: "rgba(23, 125, 255, 0.14)",
+      });
 
-    $("#lineChart2").sparkline([99, 125, 122, 105, 110, 124, 115], {
-      type: "line",
-      height: "70",
-      width: "100%",
-      lineWidth: "2",
-      lineColor: "#f3545d",
-      fillColor: "rgba(243, 84, 93, .14)",
-    });
+      $("#lineChart2").sparkline([99, 125, 122, 105, 110, 124, 115], {
+        type: "line",
+        height: "70",
+        width: "100%",
+        lineWidth: "2",
+        lineColor: "#f3545d",
+        fillColor: "rgba(243, 84, 93, .14)",
+      });
 
-    $("#lineChart3").sparkline([105, 103, 123, 100, 95, 105, 115], {
-      type: "line",
-      height: "70",
-      width: "100%",
-      lineWidth: "2",
-      lineColor: "#ffa534",
-      fillColor: "rgba(255, 165, 52, .14)",
-    });
-  </script>
+      $("#lineChart3").sparkline([105, 103, 123, 100, 95, 105, 115], {
+        type: "line",
+        height: "70",
+        width: "100%",
+        lineWidth: "2",
+        lineColor: "#ffa534",
+        fillColor: "rgba(255, 165, 52, .14)",
+      });
+    </script>
 </body>
 
 </html>
